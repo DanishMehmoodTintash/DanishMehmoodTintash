@@ -1,6 +1,6 @@
-@import './common/mixins';
-@import './common/fonts';
-@import './common/colors';
+@import "./common/mixins";
+@import "./common/fonts";
+@import "./common/colors";
 
 .container {
   display: none;
@@ -308,9 +308,9 @@
   background: $beacon-blue !important;
 }
 
-input[type='email'].share-input::-webkit-input-placeholder,
-input[type='email'].receipient-email::-webkit-input-placeholder,
-input[type='text'].your-name::-webkit-input-placeholder {
+input[type="email"].share-input::-webkit-input-placeholder,
+input[type="email"].receipient-email::-webkit-input-placeholder,
+input[type="text"].your-name::-webkit-input-placeholder {
   color: $gray !important;
 }
 

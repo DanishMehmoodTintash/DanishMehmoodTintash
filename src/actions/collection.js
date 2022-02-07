@@ -1,23 +1,23 @@
-import { OrderedMap, fromJS } from 'immutable';
+import { OrderedMap, fromJS } from "immutable";
 
-import constants from 'appConstants';
-import { initialState } from 'reducers/collection';
+import constants from "appConstants";
+import { initialState } from "reducers/collection";
 
-import axios from 'helpers/apiService';
+import axios from "helpers/apiService";
 import {
   loadSelectedItemsPanorama,
   fetchSlicedImages,
   fetchDefaultImages,
   imageToDataUri,
   imageXhr,
-} from 'helpers/imageUtils';
-import storageService from 'helpers/storageService';
-import { applyPropertyFilters, applySortAndSearch } from 'helpers/filterUtils';
-import { getShareUrl, uniqueCode } from 'helpers/shareUtils';
-import { track, trackingProps } from 'helpers/analyticsService';
+} from "helpers/imageUtils";
+import storageService from "helpers/storageService";
+import { applyPropertyFilters, applySortAndSearch } from "helpers/filterUtils";
+import { getShareUrl, uniqueCode } from "helpers/shareUtils";
+import { track, trackingProps } from "helpers/analyticsService";
 
-import { loadState } from 'store/localStorage';
-import config from 'config';
+import { loadState } from "store/localStorage";
+import config from "config";
 import {
   setOverlayLoaderState,
   setShareImage,
@@ -25,35 +25,35 @@ import {
   setAppLoading,
   setAppliedFiltersByCategory,
   setFilterDisclaimer,
-} from './interaction';
+} from "./interaction";
 
 let isCollectionOverriden = false;
 
-export const SET_CURRENT_COLLECTION = Symbol('SET_CURRENT_COLLECTION');
-export const SET_CURATED_ROOM_ID = Symbol('SET_CURATED_ROOM_ID');
-export const SET_CURRENT_COLLECTION_ID = Symbol('SET_CURRENT_COLLECTION_ID');
-export const SET_CURRENT_CONFIG = Symbol('SET_CURRENT_CONFIG');
-export const SET_CURRENT_VERSION = Symbol('SET_CURRENT_VERSION');
-export const SET_ITEMS_DATA = Symbol('SET_ITEMS_DATA');
-export const SET_FILTER_OPTIONS = Symbol('SET_FILTER_OPTIONS');
-export const SET_CURRENT_CATEGORY = Symbol('SET_CURRENT_CATEGORY');
-export const SET_CURRENT_ITEM = Symbol('SET_CURRENT_ITEM');
-export const ADD_TO_SELECTED_ITEMS = Symbol('ADD_TO_SELECTED_ITEMS');
-export const ADD_TO_CURRENT_IMAGES = Symbol('ADD_TO_CURRENT_IMAGES');
-export const SET_BASE_IMAGE = Symbol('SET_BASE_IMAGE');
-export const SET_CURRENT_IMAGES = Symbol('SET_CURRENT_IMAGES');
-export const SET_SELECTED_ITEMS = Symbol('SET_SELECTED_ITEMS');
-export const SET_CURRENT_PANORAMA = Symbol('SET_CURRENT_PANORAMA');
-export const ADD_TO_MERGED_IMAGES_MAP = Symbol('ADD_TO_MERGED_IMAGES_MAP');
-export const SET_FILTERED_ITEMS = Symbol('SET_FILTERED_ITEMS');
-export const REMOVE_FROM_CURRENT_IMAGES = Symbol('REMOVE_FROM_CURRENT_IMAGES');
-export const REMOVE_FROM_SELECTED_ITEMS = Symbol('REMOVE_FROM_SELECTED_ITEMS');
-export const SET_CONNECTED_ROOMS = Symbol('SET_CONNECTED_ROOMS');
-export const SET_CURATED_ROOMS = Symbol('SET_CURATED_ROOMS');
+export const SET_CURRENT_COLLECTION = Symbol("SET_CURRENT_COLLECTION");
+export const SET_CURATED_ROOM_ID = Symbol("SET_CURATED_ROOM_ID");
+export const SET_CURRENT_COLLECTION_ID = Symbol("SET_CURRENT_COLLECTION_ID");
+export const SET_CURRENT_CONFIG = Symbol("SET_CURRENT_CONFIG");
+export const SET_CURRENT_VERSION = Symbol("SET_CURRENT_VERSION");
+export const SET_ITEMS_DATA = Symbol("SET_ITEMS_DATA");
+export const SET_FILTER_OPTIONS = Symbol("SET_FILTER_OPTIONS");
+export const SET_CURRENT_CATEGORY = Symbol("SET_CURRENT_CATEGORY");
+export const SET_CURRENT_ITEM = Symbol("SET_CURRENT_ITEM");
+export const ADD_TO_SELECTED_ITEMS = Symbol("ADD_TO_SELECTED_ITEMS");
+export const ADD_TO_CURRENT_IMAGES = Symbol("ADD_TO_CURRENT_IMAGES");
+export const SET_BASE_IMAGE = Symbol("SET_BASE_IMAGE");
+export const SET_CURRENT_IMAGES = Symbol("SET_CURRENT_IMAGES");
+export const SET_SELECTED_ITEMS = Symbol("SET_SELECTED_ITEMS");
+export const SET_CURRENT_PANORAMA = Symbol("SET_CURRENT_PANORAMA");
+export const ADD_TO_MERGED_IMAGES_MAP = Symbol("ADD_TO_MERGED_IMAGES_MAP");
+export const SET_FILTERED_ITEMS = Symbol("SET_FILTERED_ITEMS");
+export const REMOVE_FROM_CURRENT_IMAGES = Symbol("REMOVE_FROM_CURRENT_IMAGES");
+export const REMOVE_FROM_SELECTED_ITEMS = Symbol("REMOVE_FROM_SELECTED_ITEMS");
+export const SET_CONNECTED_ROOMS = Symbol("SET_CONNECTED_ROOMS");
+export const SET_CURATED_ROOMS = Symbol("SET_CURATED_ROOMS");
 
-export const setFilterOptions = options => {
+export const setFilterOptions = (options) => {
   return (dispatch, getState) => {
-    const currentBrand = getState().experience.get('currentBrand');
+    const currentBrand = getState().experience.get("currentBrand");
 
     dispatch({
       type: SET_FILTER_OPTIONS,
@@ -63,33 +63,35 @@ export const setFilterOptions = options => {
     if (currentBrand) {
       Object.entries(options).forEach(([k, v]) => {
         if (v.brand.includes(currentBrand)) {
-          dispatch(setAppliedFiltersByCategory({ brand: { [currentBrand]: true } }, k));
-          dispatch(setFilterDisclaimer('tooltip', k));
+          dispatch(
+            setAppliedFiltersByCategory({ brand: { [currentBrand]: true } }, k)
+          );
+          dispatch(setFilterDisclaimer("tooltip", k));
         } else {
-          dispatch(setFilterDisclaimer('disclaimer', k));
+          dispatch(setFilterDisclaimer("disclaimer", k));
         }
       });
     }
   };
 };
 
-export const setCurrentImagesMap = map => {
-  return dispatch =>
+export const setCurrentImagesMap = (map) => {
+  return (dispatch) =>
     dispatch({
       type: SET_CURRENT_IMAGES,
       payload: map,
     });
 };
 
-export const setSelectedItemsMap = map => {
-  return dispatch =>
+export const setSelectedItemsMap = (map) => {
+  return (dispatch) =>
     dispatch({
       type: SET_SELECTED_ITEMS,
       payload: map,
     });
 };
 
-export const setSelectedItemsAndImages = itemsMap => {
+export const setSelectedItemsAndImages = (itemsMap) => {
   return (dispatch, getState) => {
     dispatch({
       type: SET_SELECTED_ITEMS,
@@ -97,13 +99,13 @@ export const setSelectedItemsAndImages = itemsMap => {
     });
 
     const { collection } = getState();
-    const currentId = collection.get('currentId');
+    const currentId = collection.get("currentId");
 
     const currentImagesMap = new OrderedMap(
-      itemsMap.map(v => {
+      itemsMap.map((v) => {
         return v
-          ? `${config.s3BucketUrl}/render_360/${currentId}/${v.get('render')}`
-          : '';
+          ? `${config.s3BucketUrl}/render_360/${currentId}/${v.get("render")}`
+          : "";
       })
     );
 
@@ -111,42 +113,42 @@ export const setSelectedItemsAndImages = itemsMap => {
   };
 };
 
-export const setCurrentCuratedRoomId = id => {
-  return dispatch =>
+export const setCurrentCuratedRoomId = (id) => {
+  return (dispatch) =>
     dispatch({
       type: SET_CURATED_ROOM_ID,
       payload: id,
     });
 };
 
-export const fetchCuratedRooms = collectionNumber => {
+export const fetchCuratedRooms = (collectionNumber) => {
   const url = `/shop_room_curated/${collectionNumber}/`;
   return async (dispatch, getState) => {
     try {
       const response = await axios.get(url);
       const { collection, experience } = getState();
-      const itemsData = collection.get('itemsData');
+      const itemsData = collection.get("itemsData");
       const [...categories] = collection
-        .getIn(['currentConfig', 'sortingOrder'])
+        .getIn(["currentConfig", "sortingOrder"])
         .values();
 
-      const currentBrand = experience.get('currentBrand');
+      const currentBrand = experience.get("currentBrand");
 
-      const curatedRooms = response.data.map(room => {
+      const curatedRooms = response.data.map((room) => {
         const curatedItemsList = room.items;
         room.itemsMap = {};
 
-        curatedItemsList.forEach(item => {
+        curatedItemsList.forEach((item) => {
           const itemsList = itemsData.get(item.category);
           const currentItem = itemsList.find(
-            singleItem => singleItem.get('sku_id') === item.sku_id
+            (singleItem) => singleItem.get("sku_id") === item.sku_id
           );
-          room.itemsMap[item.category] = currentItem || '';
+          room.itemsMap[item.category] = currentItem || "";
         });
 
-        categories.forEach(category => {
+        categories.forEach((category) => {
           if (!(category in room.itemsMap)) {
-            room.itemsMap[category] = '';
+            room.itemsMap[category] = "";
           }
         });
 
@@ -169,13 +171,13 @@ export const fetchCuratedRooms = collectionNumber => {
   };
 };
 
-export const fetchCollectionItemsData = collectionNumber => {
+export const fetchCollectionItemsData = (collectionNumber) => {
   const url = `/shop_room_360/${collectionNumber}/`;
-  return async dispatch => {
+  return async (dispatch) => {
     try {
       const response = await axios.get(url);
 
-      if ('FilterOptions' in response.data) {
+      if ("FilterOptions" in response.data) {
         const { FilterOptions } = response.data;
         dispatch(setFilterOptions(FilterOptions));
 
@@ -192,9 +194,9 @@ export const fetchCollectionItemsData = collectionNumber => {
   };
 };
 
-export const fetchCollectionConfig = collectionNumber => {
+export const fetchCollectionConfig = (collectionNumber) => {
   const url = `${config.s3BucketUrl}/render_360/${collectionNumber}/roomdata.json`;
-  return async dispatch => {
+  return async (dispatch) => {
     try {
       const response = await axios.get(url);
       dispatch({
@@ -207,9 +209,9 @@ export const fetchCollectionConfig = collectionNumber => {
   };
 };
 
-export const fetchCollectionVersion = collectionNumber => {
+export const fetchCollectionVersion = (collectionNumber) => {
   const url = `/room_version/${collectionNumber}/`;
-  return async dispatch => {
+  return async (dispatch) => {
     try {
       const response = await axios.get(url);
       dispatch({
@@ -223,24 +225,24 @@ export const fetchCollectionVersion = collectionNumber => {
 };
 
 export const goToCollection = (collectionNumber, overloadState = {}) => {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch(setAppLoading(true));
 
     const localStateObject = loadState(collectionNumber);
-    const firstVisit = storageService().session.getItem('tooltipStatus');
-    const brand = storageService().session.getItem('brand');
+    const firstVisit = storageService().session.getItem("tooltipStatus");
+    const brand = storageService().session.getItem("brand");
 
     let persistedState = initialState;
     isCollectionOverriden = false;
     if (Object.keys(overloadState).length) {
       persistedState = persistedState.merge(overloadState);
       isCollectionOverriden = true;
-    } else if (localStateObject && !(firstVisit === 'true' && brand)) {
+    } else if (localStateObject && !(firstVisit === "true" && brand)) {
       const { value: localState } = loadState(collectionNumber);
       persistedState = persistedState.merge(localState);
 
       isCollectionOverriden = true;
-    } else if (firstVisit === 'true' && brand) {
+    } else if (firstVisit === "true" && brand) {
       // TEMP(?) - clearing local storage so on every new visit, only brand associated
       // items (curated room) is applied.
       storageService().local.clear();
@@ -255,15 +257,15 @@ export const goToCollection = (collectionNumber, overloadState = {}) => {
   };
 };
 
-export const setCurrentCollection = collectionNumber => {
+export const setCurrentCollection = (collectionNumber) => {
   return (dispatch, getState) => {
     const { experience, collection } = getState();
-    const currentCollection = collection.get('currentCollection');
-    if (currentCollection?.get('room_type_id') === collectionNumber) return;
+    const currentCollection = collection.get("currentCollection");
+    if (currentCollection?.get("room_type_id") === collectionNumber) return;
 
-    const allCollections = experience.get('allCollections');
+    const allCollections = experience.get("allCollections");
     const currentRoom = allCollections.find(
-      value => value.get('room_type_id') === collectionNumber
+      (value) => value.get("room_type_id") === collectionNumber
     );
 
     dispatch({
@@ -273,24 +275,24 @@ export const setCurrentCollection = collectionNumber => {
   };
 };
 
-export const setCurrentPanorama = hash => {
-  return dispatch =>
+export const setCurrentPanorama = (hash) => {
+  return (dispatch) =>
     dispatch({
       type: SET_CURRENT_PANORAMA,
       payload: hash,
     });
 };
 
-export const setCurrentCategory = category => {
-  return dispatch =>
+export const setCurrentCategory = (category) => {
+  return (dispatch) =>
     dispatch({
       type: SET_CURRENT_CATEGORY,
       payload: category,
     });
 };
 
-export const setFilteredItems = items => {
-  return dispatch =>
+export const setFilteredItems = (items) => {
+  return (dispatch) =>
     dispatch({
       type: SET_FILTERED_ITEMS,
       payload: items,
@@ -301,7 +303,7 @@ export const loadDefaultImagesInHashMap = () => {
   return async () => fetchDefaultImages();
 };
 
-export const loadInitialImagesInHashMap = cb => {
+export const loadInitialImagesInHashMap = (cb) => {
   return () => fetchSlicedImages({ limit: 2, batchSize: 4 }, cb);
 };
 
@@ -309,12 +311,12 @@ export const loadAllImagesInHashMap = () => {
   return () => fetchSlicedImages();
 };
 
-export const loadCategoryImagesInHashMap = items => {
+export const loadCategoryImagesInHashMap = (items) => {
   return () => fetchSlicedImages({ items });
 };
 
-export const setCurrentItem = item => {
-  return dispatch =>
+export const setCurrentItem = (item) => {
+  return (dispatch) =>
     dispatch({
       type: SET_CURRENT_ITEM,
       payload: item,
@@ -322,7 +324,7 @@ export const setCurrentItem = item => {
 };
 
 export const addImageToSelected = (image, category) => {
-  return dispatch =>
+  return (dispatch) =>
     dispatch({
       type: ADD_TO_CURRENT_IMAGES,
       image,
@@ -330,10 +332,10 @@ export const addImageToSelected = (image, category) => {
     });
 };
 
-export const removeImageFromSelected = category => {
+export const removeImageFromSelected = (category) => {
   return (dispatch, getState) => {
     const { collection } = getState();
-    const currentId = collection.get('currentId');
+    const currentId = collection.get("currentId");
 
     const currentDefaultImages = constants.DEFAULT_RENDERS[currentId];
     if (currentDefaultImages && category in currentDefaultImages) {
@@ -355,16 +357,16 @@ export const removeImageFromSelected = category => {
 export const syncSelectedItemsAndImages = () => {
   return (dispatch, getState) => {
     const { collection } = getState();
-    const currentImagesMap = collection.get('currentImagesMap');
-    const itemsData = collection.get('itemsData');
+    const currentImagesMap = collection.get("currentImagesMap");
+    const itemsData = collection.get("itemsData");
 
     if (itemsData.size === 0) return;
 
     const selectedItemsMap = new OrderedMap(
       currentImagesMap.map((v, k) => {
-        const render = v.split('/').pop();
+        const render = v.split("/").pop();
         return render
-          ? itemsData.get(k)?.find(item => item.get('render') === render)
+          ? itemsData.get(k)?.find((item) => item.get("render") === render)
           : render;
       })
     );
@@ -373,30 +375,30 @@ export const syncSelectedItemsAndImages = () => {
   };
 };
 
-export const setBaseImage = image => {
-  return dispatch =>
+export const setBaseImage = (image) => {
+  return (dispatch) =>
     dispatch({
       type: SET_BASE_IMAGE,
       image,
     });
 };
 
-export const getImagesFromHashMap = images => {
+export const getImagesFromHashMap = (images) => {
   return (_, getState) => {
     const { collection, experience } = getState();
-    const currentId = collection.get('currentId');
-    const hashMap = experience.getIn(['imagesHashMap', currentId]);
+    const currentId = collection.get("currentId");
+    const hashMap = experience.getIn(["imagesHashMap", currentId]);
 
-    return images.map(img => {
+    return images.map((img) => {
       if (!img) return null;
-      const imageName = img.split('/').pop();
+      const imageName = img.split("/").pop();
       return hashMap.has(imageName) ? hashMap.get(imageName) : img;
     });
   };
 };
 
 export const addToMergedImagesMap = (hash, key) => {
-  return dispatch =>
+  return (dispatch) =>
     dispatch({
       type: ADD_TO_MERGED_IMAGES_MAP,
       hash,
@@ -405,41 +407,41 @@ export const addToMergedImagesMap = (hash, key) => {
 };
 
 export const loadVariant = (loader = true) => {
-  return async dispatch => {
-    loader && dispatch(setOverlayLoaderState('loader'));
+  return async (dispatch) => {
+    loader && dispatch(setOverlayLoaderState("loader"));
     await loadSelectedItemsPanorama();
-    loader && dispatch(setOverlayLoaderState('none'));
+    loader && dispatch(setOverlayLoaderState("none"));
   };
 };
 
-export const selectItem = item => {
+export const selectItem = (item) => {
   return (dispatch, getState) => {
     const { collection } = getState();
-    const currentId = collection.get('currentId');
-    const collectionName = collection.getIn(['currentCollection', 'type_name']);
+    const currentId = collection.get("currentId");
+    const collectionName = collection.getIn(["currentCollection", "type_name"]);
 
     dispatch({
       type: ADD_TO_SELECTED_ITEMS,
       item: item,
-      category: item.get('category'),
+      category: item.get("category"),
     });
 
     const imageUrl = `${config.s3BucketUrl}/render_360/${currentId}/${item.get(
-      'render'
+      "render"
     )}`;
-    dispatch(addImageToSelected(imageUrl, item.get('category')));
+    dispatch(addImageToSelected(imageUrl, item.get("category")));
 
-    track('Product Tile', {
+    track("Product Tile", {
       [trackingProps.ROOM_NAME]: collectionName,
-      [trackingProps.NAV_CATEGORY]: item.get('category'),
-      [trackingProps.PRODUCT_NAME]: item.get('name'),
-      [trackingProps.BRAND_NAME]: item.get('brand'),
+      [trackingProps.NAV_CATEGORY]: item.get("category"),
+      [trackingProps.PRODUCT_NAME]: item.get("name"),
+      [trackingProps.BRAND_NAME]: item.get("brand"),
     });
   };
 };
 
-export const removeItem = category => {
-  return dispatch => {
+export const removeItem = (category) => {
+  return (dispatch) => {
     dispatch({
       type: REMOVE_FROM_SELECTED_ITEMS,
       category: category,
@@ -452,17 +454,19 @@ export const removeItem = category => {
 export const resetCollection = () => {
   return (dispatch, getState) => {
     const { collection } = getState();
-    const currentId = collection.get('currentId');
-    const [...itemList] = collection.getIn(['currentConfig', 'sortingOrder']).values();
-    const emptyCategoriesMap = new OrderedMap(itemList.map(key => [key, '']));
+    const currentId = collection.get("currentId");
+    const [...itemList] = collection
+      .getIn(["currentConfig", "sortingOrder"])
+      .values();
+    const emptyCategoriesMap = new OrderedMap(itemList.map((key) => [key, ""]));
 
     const defaultCollectionRenders = constants.DEFAULT_RENDERS[currentId];
     const defaultImagesMap = new OrderedMap(
-      itemList.map(key => [
+      itemList.map((key) => [
         key,
         defaultCollectionRenders && key in defaultCollectionRenders
           ? `${config.s3BucketUrl}/utils/${defaultCollectionRenders[key]}`
-          : '',
+          : "",
       ])
     );
 
@@ -474,12 +478,14 @@ export const resetCollection = () => {
 export const applyFilters = () => {
   return (dispatch, getState) => {
     const { collection, interaction } = getState();
-    const itemsData = collection.get('itemsData');
-    const currentCategory = collection.get('currentCategory');
+    const itemsData = collection.get("itemsData");
+    const currentCategory = collection.get("currentCategory");
 
-    const appliedFilters = interaction.get('appliedFilters').toJS()[currentCategory];
-    const sortState = interaction.get('sortState');
-    const searchString = interaction.get('searchString');
+    const appliedFilters = interaction.get("appliedFilters").toJS()[
+      currentCategory
+    ];
+    const sortState = interaction.get("sortState");
+    const searchString = interaction.get("searchString");
     if (itemsData.has(currentCategory)) {
       const itemsList = itemsData.get(currentCategory).toJS();
       let list = applyPropertyFilters(itemsList, appliedFilters);
@@ -489,13 +495,13 @@ export const applyFilters = () => {
   };
 };
 
-export const sendEmail = email => {
-  const url = '/email_360';
+export const sendEmail = (email) => {
+  const url = "/email_360";
 
   return async (_, getState) => {
     const { collection, interaction } = getState();
-    const [...itemData] = collection.get('selectedItemsMap').values();
-    const shareImage = interaction.get('shareImage');
+    const [...itemData] = collection.get("selectedItemsMap").values();
+    const shareImage = interaction.get("shareImage");
 
     const urlToShare = getShareUrl();
 
@@ -503,12 +509,14 @@ export const sendEmail = email => {
       url: urlToShare,
       email: email,
       shareImage: shareImage,
-      itemData: itemData.filter(image => !!image),
+      itemData: itemData.filter((image) => !!image),
       nurseryUrl: urlToShare,
     };
 
     try {
-      await axios.post(url, data, { headers: { 'Content-Type': 'application/json' } });
+      await axios.post(url, data, {
+        headers: { "Content-Type": "application/json" },
+      });
     } catch (err) {
       console.error(err);
     }
@@ -516,55 +524,63 @@ export const sendEmail = email => {
 };
 
 export const uploadShareImage = () => {
-  const url = '/upload_share_image/';
+  const url = "/upload_share_image/";
 
   return async (dispatch, getState) => {
-    dispatch(setOverlayLoaderState('loader'));
+    dispatch(setOverlayLoaderState("loader"));
 
     const { interaction, collection } = getState();
-    const PSV = interaction.get('PSV');
-    const currentId = collection.get('currentId');
-    const roomAngle = collection.getIn(['currentConfig', 'roomAngle']).toJS();
+    const PSV = interaction.get("PSV");
+    const currentId = collection.get("currentId");
+    const roomAngle = collection.getIn(["currentConfig", "roomAngle"]).toJS();
 
     const isMobile = window.innerWidth <= 600;
 
-    if (isMobile) PSV.resizeView('33.5%');
+    if (isMobile) PSV.resizeView("33.5%");
     PSV.rotate(roomAngle);
 
     setTimeout(async () => {
-      const captureImgStr = PSV.renderer.renderer.domElement.toDataURL('image/png');
+      const captureImgStr =
+        PSV.renderer.renderer.domElement.toDataURL("image/png");
       PSV.resetView();
 
       const imageWidth = 700;
       const imageHeight = imageWidth / 1.6;
 
-      await imageToDataUri(captureImgStr, imageWidth, imageHeight, async resizeImage => {
-        const strRemove = 'data:image/png;base64,';
-        const imageString = resizeImage.substring(strRemove.length);
-        const encryptedCode = `${uniqueCode()}${currentId}`;
+      await imageToDataUri(
+        captureImgStr,
+        imageWidth,
+        imageHeight,
+        async (resizeImage) => {
+          const strRemove = "data:image/png;base64,";
+          const imageString = resizeImage.substring(strRemove.length);
+          const encryptedCode = `${uniqueCode()}${currentId}`;
 
-        const data = {
-          name: `${encryptedCode}.jpg`,
-          thumbnail: imageString,
-        };
+          const data = {
+            name: `${encryptedCode}.jpg`,
+            thumbnail: imageString,
+          };
 
-        await axios.post(url, data);
-        dispatch(
-          setShareImage(`${config.s3BucketUrl}/share-images/${encryptedCode}.jpg`)
-        );
-        dispatch(setOverlayLoaderState('none'));
-      });
+          await axios.post(url, data);
+          dispatch(
+            setShareImage(
+              `${config.s3BucketUrl}/share-images/${encryptedCode}.jpg`
+            )
+          );
+          dispatch(setOverlayLoaderState("none"));
+        }
+      );
     }, 50);
   };
 };
 
 export const shareEmail = (email, name, message) => {
-  const url = '/share_email';
+  const url = "/share_email";
 
   return async (_, getState) => {
     const { interaction, collection } = getState();
-    const shareImage = interaction.get('shareImage');
-    const [...itemData] = collection.get('selectedItemsMap').values();
+    const shareImage = interaction.get("shareImage");
+    const [...itemData] = collection.get("selectedItemsMap").values();
 
     const data = {
       emailTo: email,
@@ -577,15 +593,17 @@ export const shareEmail = (email, name, message) => {
     };
 
     try {
-      await axios.post(url, data, { headers: { 'Content-Type': 'application/json' } });
+      await axios.post(url, data, {
+        headers: { "Content-Type": "application/json" },
+      });
     } catch (err) {
       console.error(err);
     }
   };
 };
 
-export const setConnectedRooms = map => {
-  return dispatch =>
+export const setConnectedRooms = (map) => {
+  return (dispatch) =>
     dispatch({
       type: SET_CONNECTED_ROOMS,
       payload: map,
@@ -595,34 +613,36 @@ export const setConnectedRooms = map => {
 export const prefetchConnectedRooms = () => {
   return (dispatch, getState) => {
     const { collection, experience } = getState();
-    const currentId = collection.get('currentId');
-    const allCollections = experience.get('allCollections');
-    const imagesHashMap = experience.get('imagesHashMap');
+    const currentId = collection.get("currentId");
+    const allCollections = experience.get("allCollections");
+    const imagesHashMap = experience.get("imagesHashMap");
 
     const currentRoom = allCollections.find(
-      value => value.get('room_type_id') === currentId
+      (value) => value.get("room_type_id") === currentId
     );
-    const connectedRooms = currentRoom.get('connected_with');
+    const connectedRooms = currentRoom.get("connected_with");
 
     const connectedRoomsMap = {};
 
-    connectedRooms.forEach(async roomId => {
-      const room = allCollections.find(value => value.get('room_type_id') === roomId);
-      connectedRoomsMap[room.get('type_name')] = room;
+    connectedRooms.forEach(async (roomId) => {
+      const room = allCollections.find(
+        (value) => value.get("room_type_id") === roomId
+      );
+      connectedRoomsMap[room.get("type_name")] = room;
 
       const itemsDataUrl = `/shop_room_360/${roomId}/`;
       axios.get(itemsDataUrl);
 
-      if (!imagesHashMap.get(roomId)?.has('baseImage.jpg')) {
+      if (!imagesHashMap.get(roomId)?.has("baseImage.jpg")) {
         const baseImageUrl = `${config.s3BucketUrl}/render_360/${roomId}/baseImage.jpg`;
-        imageXhr('baseImage.jpg', baseImageUrl, roomId);
+        imageXhr("baseImage.jpg", baseImageUrl, roomId);
       }
 
-      if (!imagesHashMap.get(roomId)?.has('baseImage-low.jpg')) {
+      if (!imagesHashMap.get(roomId)?.has("baseImage-low.jpg")) {
         const baseImageLowUrl = `${
           config.s3BucketUrl
         }/render_360/${roomId}/baseImage-low.jpg?${new Date().getTime()}`;
-        imageXhr('baseImage-low.jpg', baseImageLowUrl, roomId);
+        imageXhr("baseImage-low.jpg", baseImageLowUrl, roomId);
       }
     });
 

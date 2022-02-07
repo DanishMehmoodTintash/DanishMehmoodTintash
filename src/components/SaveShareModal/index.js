@@ -1,17 +1,17 @@
-import React, { useRef, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import EscapeOutside from 'react-escape-outside';
-import { Map } from 'immutable';
+import React, { useRef, useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import EscapeOutside from "react-escape-outside";
+import { Map } from "immutable";
 
-import { setSaveShareOpen } from 'actions/interaction';
-import { sendEmail, uploadShareImage, shareEmail } from 'actions/collection';
+import { setSaveShareOpen } from "actions/interaction";
+import { sendEmail, uploadShareImage, shareEmail } from "actions/collection";
 
-import styles from 'styles/SaveShareModal.module.scss';
+import styles from "styles/SaveShareModal.module.scss";
 
-import ShareModal from './components/ShareModal';
-import ShareEmail from './components/ShareEmail';
-import ExportPdf from './components/ExportPdf';
+import ShareModal from "./components/ShareModal";
+import ShareEmail from "./components/ShareEmail";
+import ExportPdf from "./components/ExportPdf";
 
 const SaveShareModal = ({
   isSaveShareOpen,
@@ -40,7 +40,7 @@ const SaveShareModal = ({
   }, [isSaveShareOpen]);
 
   useEffect(() => {
-    overlayRef.current?.addEventListener('click', closeSaveShare);
+    overlayRef.current?.addEventListener("click", closeSaveShare);
   }, [overlayLoaderState]);
 
   return (
@@ -48,7 +48,7 @@ const SaveShareModal = ({
       {isSaveShareOpen && (
         <>
           <div className={styles.overlay} ref={overlayRef} />
-          <div className={styles['share-container']}>
+          <div className={styles["share-container"]}>
             <EscapeOutside
               onEscapeOutside={closeSaveShare}
               mouseEvent={null}
@@ -96,7 +96,8 @@ SaveShareModal.propTypes = {
   uploadShareImage: PropTypes.func.isRequired,
   shareImage: PropTypes.string.isRequired,
   shareEmail: PropTypes.func.isRequired,
-  overlayLoaderState: PropTypes.oneOf(['all', 'loader', 'overlay', 'none']).isRequired,
+  overlayLoaderState: PropTypes.oneOf(["all", "loader", "overlay", "none"])
+    .isRequired,
   currentCollection: PropTypes.instanceOf(Map),
 };
 
@@ -104,11 +105,11 @@ SaveShareModal.defaultProps = {
   currentCollection: null,
 };
 
-const mapStateToProps = state => ({
-  isSaveShareOpen: state.interaction.get('isSaveShareOpen'),
-  shareImage: state.interaction.get('shareImage'),
-  overlayLoaderState: state.interaction.get('overlayLoaderState'),
-  currentCollection: state.collection.get('currentCollection'),
+const mapStateToProps = (state) => ({
+  isSaveShareOpen: state.interaction.get("isSaveShareOpen"),
+  shareImage: state.interaction.get("shareImage"),
+  overlayLoaderState: state.interaction.get("overlayLoaderState"),
+  currentCollection: state.collection.get("currentCollection"),
 });
 
 const mapDispatchToProps = {

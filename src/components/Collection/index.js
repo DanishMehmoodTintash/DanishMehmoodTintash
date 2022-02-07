@@ -1,9 +1,9 @@
-import React, { useRef, useEffect, useState, useLayoutEffect } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Map } from 'immutable';
-import { Viewer as PhotoSphereViewer } from '@moiz.imran/photo-sphere-viewer';
-import { imageXhr } from 'helpers/imageUtils';
+import React, { useRef, useEffect, useState, useLayoutEffect } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { Map } from "immutable";
+import { Viewer as PhotoSphereViewer } from "@moiz.imran/photo-sphere-viewer";
+import { imageXhr } from "helpers/imageUtils";
 
 import {
   fetchCollectionConfig,
@@ -14,22 +14,22 @@ import {
   loadDefaultImagesInHashMap,
   setCurrentCollection,
   fetchCuratedRooms,
-} from 'actions/collection';
-import { setCanvasRef, setTooltipStatus } from 'actions/experience';
-import { setAppLoading } from 'actions/interaction';
+} from "actions/collection";
+import { setCanvasRef, setTooltipStatus } from "actions/experience";
+import { setAppLoading } from "actions/interaction";
 
-import ChangeRoomModal from 'components/ChangeRoomModal';
-import IntroScreen from 'components/IntroScreen';
-import OverlayLoader from 'components/common/OverlayLoader';
-import RoomSettingsDropdown from 'components/RoomSettingsDropdown';
-import ResetModal from 'components/ResetModal';
-import Sidebar from 'components/Sidebar';
-import SaveShareModal from 'components/SaveShareModal';
-import Viewer from 'components/Viewer';
-import RoomLoader from 'components/RoomLoader';
-import MarkerPopupList from 'components/MarkerPopupList';
+import ChangeRoomModal from "components/ChangeRoomModal";
+import IntroScreen from "components/IntroScreen";
+import OverlayLoader from "components/common/OverlayLoader";
+import RoomSettingsDropdown from "components/RoomSettingsDropdown";
+import ResetModal from "components/ResetModal";
+import Sidebar from "components/Sidebar";
+import SaveShareModal from "components/SaveShareModal";
+import Viewer from "components/Viewer";
+import RoomLoader from "components/RoomLoader";
+import MarkerPopupList from "components/MarkerPopupList";
 
-import config from 'config';
+import config from "config";
 
 const Collection = ({
   overlayLoaderState,
@@ -59,7 +59,7 @@ const Collection = ({
   const itemsCanvas = useRef(null);
   const postItemsCanvas = useRef(null);
 
-  const setPSVRef = ref => {
+  const setPSVRef = (ref) => {
     PSVContainer.current = ref;
   };
 
@@ -85,11 +85,11 @@ const Collection = ({
       ];
 
       let baseImage;
-      if (imagesHashMap.get(currentId)?.has('baseImage.jpg')) {
-        baseImage = imagesHashMap.getIn([currentId, 'baseImage.jpg']);
+      if (imagesHashMap.get(currentId)?.has("baseImage.jpg")) {
+        baseImage = imagesHashMap.getIn([currentId, "baseImage.jpg"]);
       } else {
         const baseImageUrl = `${config.s3BucketUrl}/render_360/${currentId}/baseImage.jpg`;
-        promises.push(imageXhr('baseImage.jpg', baseImageUrl, currentId));
+        promises.push(imageXhr("baseImage.jpg", baseImageUrl, currentId));
       }
 
       const results = await Promise.allSettled(promises);
@@ -110,21 +110,24 @@ const Collection = ({
   }, [currentId]);
 
   useEffect(() => {
-    PSV?.on('ready', () => setViewerReady(true));
+    PSV?.on("ready", () => setViewerReady(true));
 
-    PSV?.on('panorama-loaded', () => {
+    PSV?.on("panorama-loaded", () => {
       setPanoramaLoaded(true);
     });
   }, [PSV]);
 
   useEffect(() => {
-    setCanvasRef(itemsCanvas.current, 'default');
-    setCanvasRef(postItemsCanvas.current, 'post');
+    setCanvasRef(itemsCanvas.current, "default");
+    setCanvasRef(postItemsCanvas.current, "post");
   }, []);
 
   return (
     <>
-      <OverlayLoader state={overlayLoaderState} zIndex={isIntroScreen ? 99 : null} />
+      <OverlayLoader
+        state={overlayLoaderState}
+        zIndex={isIntroScreen ? 99 : null}
+      />
       <RoomSettingsDropdown isDisabled={isAppLoading} />
       {markerDropdownCategories?.length > 0 && (
         <MarkerPopupList isDisabled={isAppLoading} />
@@ -150,7 +153,8 @@ const Collection = ({
 
 Collection.propTypes = {
   currentId: PropTypes.number.isRequired,
-  overlayLoaderState: PropTypes.oneOf(['all', 'loader', 'overlay', 'none']).isRequired,
+  overlayLoaderState: PropTypes.oneOf(["all", "loader", "overlay", "none"])
+    .isRequired,
   fetchCollectionItemsData: PropTypes.func.isRequired,
   fetchCuratedRooms: PropTypes.func.isRequired,
   fetchCollectionConfig: PropTypes.func.isRequired,
@@ -173,14 +177,14 @@ Collection.defaultProps = {
   PSV: null,
 };
 
-const mapStateToProps = state => ({
-  currentId: state.collection.get('currentId'),
-  overlayLoaderState: state.interaction.get('overlayLoaderState'),
-  isIntroScreen: state.experience.get('isIntroScreen'),
-  PSV: state.interaction.get('PSV'),
-  isAppLoading: state.interaction.get('isAppLoading'),
-  imagesHashMap: state.experience.get('imagesHashMap'),
-  markerDropdownCategories: state.interaction.get('markerDropdownCategories'),
+const mapStateToProps = (state) => ({
+  currentId: state.collection.get("currentId"),
+  overlayLoaderState: state.interaction.get("overlayLoaderState"),
+  isIntroScreen: state.experience.get("isIntroScreen"),
+  PSV: state.interaction.get("PSV"),
+  isAppLoading: state.interaction.get("isAppLoading"),
+  imagesHashMap: state.experience.get("imagesHashMap"),
+  markerDropdownCategories: state.interaction.get("markerDropdownCategories"),
 });
 
 const mapDispatchToProps = {

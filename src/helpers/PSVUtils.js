@@ -1,8 +1,8 @@
-import { store } from 'App';
+import { store } from "App";
 
-import MarkersPlugin from '@moiz.imran/photo-sphere-viewer/dist/plugins/markers';
+import MarkersPlugin from "@moiz.imran/photo-sphere-viewer/dist/plugins/markers";
 
-import { goToCollection, setCurrentCategory } from 'actions/collection';
+import { goToCollection, setCurrentCategory } from "actions/collection";
 import {
   setMarkerDropdownOpen,
   setDropdownPosition,
@@ -10,27 +10,26 @@ import {
   setMarkerSelected,
   setSidebarOpen,
   setSidebarComponent,
-} from 'actions/interaction';
+} from "actions/interaction";
 
-import config from 'config';
+import config from "config";
 
 const isMobile = () => window.innerWidth <= 600;
 let isResizing = false;
 
 const PSV_CONFIG = {
-  container: 'photosphere',
+  container: "photosphere",
   plugins: [MarkersPlugin],
-  autorotateSpeed: '1rpm',
+  autorotateSpeed: "1rpm",
   mousewheel: false,
   navbar: [{ hidden: true }],
-  loadingImg: '',
-  loadingTxt: '',
+  loadingImg: "",
+  loadingTxt: "",
 };
 
 export const getPSVConfig = () => {
   const { collection } = store.getState();
-  const roomAngle = collection.getIn(['currentConfig', 'roomAngle']).toJS();
-
+  const roomAngle = collection.getIn(["currentConfig", "roomAngle"]).toJS();
   return {
     ...PSV_CONFIG,
     defaultLong: roomAngle.longitude,
@@ -42,18 +41,19 @@ export const getPSVConfig = () => {
 export const handleClusterMarkerState = (markerId, flag) => {
   if (flag) {
     const clusterMarker = document.getElementById(`${markerId}-layer`);
-    clusterMarker?.classList.add('marker-selected-state');
+    clusterMarker?.classList.add("marker-selected-state");
   } else {
     const clusterMarker = document.getElementById(`${markerId}-layer`);
-    clusterMarker?.classList.remove('marker-selected-state');
+    clusterMarker?.classList.remove("marker-selected-state");
   }
 };
 
 export const fillMarkers = (PSV, onCategoryClick) => {
   const { collection } = store.getState();
-  const markers = collection.getIn(['currentConfig', 'markers']).toJS();
-  const roomMarkers = collection.getIn(['currentConfig', 'roomMarkers'])?.toJS() || {};
-  const connectedRooms = collection.get('connectedRooms');
+  const markers = collection.getIn(["currentConfig", "markers"]).toJS();
+  const roomMarkers =
+    collection.getIn(["currentConfig", "roomMarkers"])?.toJS() || {};
+  const connectedRooms = collection.get("connectedRooms");
 
   const markerSize = isMobile() ? 16 : 22;
 
@@ -62,22 +62,22 @@ export const fillMarkers = (PSV, onCategoryClick) => {
   const markerData = (key, value) => {
     return {
       id: key,
-      content: '',
+      content: "",
       latitude: value.latitude,
       longitude: value.longitude,
       width: markerSize,
       height: markerSize,
-      anchor: 'bottom center',
+      anchor: "bottom center",
       categories: value.categories,
       isCluster: value.isCluster,
       dependentCluster: value.dependentCluster,
     };
   };
 
-  const handleClusterMarker = marker => {
+  const handleClusterMarker = (marker) => {
     const { interaction } = store.getState();
     const { longitude } = marker.config;
-    const speed = '4rpm';
+    const speed = "4rpm";
 
     let { latitude } = marker.config;
     latitude += 0.4;
@@ -85,7 +85,7 @@ export const fillMarkers = (PSV, onCategoryClick) => {
     PSV.animate({ longitude, latitude, speed }).then(() => {
       store.dispatch(setSidebarComponent(null));
 
-      const isMarkerDropdownOpen = interaction.get('isMarkerDropdownOpen');
+      const isMarkerDropdownOpen = interaction.get("isMarkerDropdownOpen");
       if (!isMarkerDropdownOpen) {
         setTimeout(() => {
           handleClusterMarkerState(marker.id, true);
@@ -127,7 +127,7 @@ export const fillMarkers = (PSV, onCategoryClick) => {
         ...markerData(k, v),
         tooltip: {
           content: k,
-          position: 'bottom right',
+          position: "bottom right",
         },
         hidden: true,
         html: `
@@ -160,9 +160,9 @@ export const fillMarkers = (PSV, onCategoryClick) => {
   });
 
   const markersPlugin = PSV.getPlugin(MarkersPlugin);
-  markersList.forEach(marker => markersPlugin?.addMarker(marker, true));
+  markersList.forEach((marker) => markersPlugin?.addMarker(marker, true));
 
-  markersPlugin.on('select-marker', (e, marker, { dblclick }) => {
+  markersPlugin.on("select-marker", (e, marker, { dblclick }) => {
     if (!dblclick) {
       if (marker.id in markers) {
         if (marker.config.isCluster) {
@@ -170,12 +170,12 @@ export const fillMarkers = (PSV, onCategoryClick) => {
           store.dispatch(setCurrentCategory(null));
           handleClusterMarker(marker);
         } else if (marker.config.dependentCluster) {
-          console.log('clustered marker detected');
+          console.log("clustered marker detected");
         } else {
-          onCategoryClick(marker.id, 'Swap/Add Button');
+          onCategoryClick(marker.id, "Swap/Add Button");
         }
       } else {
-        const id = connectedRooms.get(marker.id)?.get('room_type_id');
+        const id = connectedRooms.get(marker.id)?.get("room_type_id");
         store.dispatch(goToCollection(id));
       }
     }
@@ -184,18 +184,18 @@ export const fillMarkers = (PSV, onCategoryClick) => {
 
 export const updateMarkersState = () => {
   const { collection, interaction } = store.getState();
-  const markers = collection.getIn(['currentConfig', 'markers']).toJS();
-  const currentCategory = collection.get('currentCategory');
-  const sidebarComponent = interaction.get('sidebarComponent');
-  const isSidebarOpen = interaction.get('isSidebarOpen');
-  const categories = interaction.get('markerDropdownCategories');
-  const markerSelected = interaction.get('markerSelected');
+  const markers = collection.getIn(["currentConfig", "markers"]).toJS();
+  const currentCategory = collection.get("currentCategory");
+  const sidebarComponent = interaction.get("sidebarComponent");
+  const isSidebarOpen = interaction.get("isSidebarOpen");
+  const categories = interaction.get("markerDropdownCategories");
+  const markerSelected = interaction.get("markerSelected");
 
-  Object.keys(markers).forEach(markerId => {
+  Object.keys(markers).forEach((markerId) => {
     const marker = document.getElementById(`${markerId}-layer`);
     if (marker) {
-      if (marker.classList.contains('marker-selected-state')) {
-        marker.classList.remove('marker-selected-state');
+      if (marker.classList.contains("marker-selected-state")) {
+        marker.classList.remove("marker-selected-state");
       }
     }
   });
@@ -203,9 +203,9 @@ export const updateMarkersState = () => {
   if (
     currentCategory &&
     isSidebarOpen &&
-    sidebarComponent !== 'CuratedRoom' &&
-    sidebarComponent !== 'ShoppingList' &&
-    sidebarComponent !== 'CategoriesList'
+    sidebarComponent !== "CuratedRoom" &&
+    sidebarComponent !== "ShoppingList" &&
+    sidebarComponent !== "CategoriesList"
   ) {
     if (categories.indexOf(currentCategory) === -1) {
       handleClusterMarkerState(currentCategory, true);
@@ -215,77 +215,86 @@ export const updateMarkersState = () => {
   }
 };
 
-export const adjustView = PSV => {
+export const adjustView = (PSV) => {
   if (isMobile() || isResizing) return;
 
   const { collection, interaction } = store.getState();
-  const currentCategory = collection.get('currentCategory');
-  const markers = collection.getIn(['currentConfig', 'markers', currentCategory]);
-  const markerDropdownCategoryList = interaction.get('markerDropdownCategories');
-  const speed = '4rpm';
+  const currentCategory = collection.get("currentCategory");
+  const markers = collection.getIn([
+    "currentConfig",
+    "markers",
+    currentCategory,
+  ]);
+  const markerDropdownCategoryList = interaction.get(
+    "markerDropdownCategories"
+  );
+  const speed = "4rpm";
 
-  if (currentCategory && markerDropdownCategoryList.indexOf(currentCategory) === -1) {
-    const longitude = markers?.get('longitude');
-    const latitude = markers?.get('latitude');
+  if (
+    currentCategory &&
+    markerDropdownCategoryList.indexOf(currentCategory) === -1
+  ) {
+    const longitude = markers?.get("longitude");
+    const latitude = markers?.get("latitude");
     PSV.animate({ longitude, latitude, speed });
   }
 };
 
-export const resize360View = PSV => {
+export const resize360View = (PSV) => {
   isResizing = true;
 
   if (isMobile()) {
     const { collection } = store.getState();
-    const markers = collection.getIn(['currentConfig', 'markers']);
-    const roomMarkers = collection.getIn(['currentConfig', 'roomMarkers']);
+    const markers = collection.getIn(["currentConfig", "markers"]);
+    const roomMarkers = collection.getIn(["currentConfig", "roomMarkers"]);
 
     setTimeout(() => {
-      PSV.resizeView('33.5%');
+      PSV.resizeView("33.5%");
     }, 250);
 
     const markersPlugin = PSV.getPlugin(MarkersPlugin);
-    markers?.mapKeys(marker => markersPlugin?.hideMarker(marker));
-    roomMarkers?.mapKeys(marker => markersPlugin?.hideMarker(marker));
+    markers?.mapKeys((marker) => markersPlugin?.hideMarker(marker));
+    roomMarkers?.mapKeys((marker) => markersPlugin?.hideMarker(marker));
   } else {
     setTimeout(() => {
-      PSV.resizeView('100%', '74%');
+      PSV.resizeView("100%", "74%");
       isResizing = false;
       adjustView(PSV);
     }, 250);
   }
 };
 
-export const reset360View = PSV => {
+export const reset360View = (PSV) => {
   PSV.resetView();
   if (isMobile()) {
     const { collection } = store.getState();
-    const markers = collection.getIn(['currentConfig', 'markers']);
-    const roomMarkers = collection.getIn(['currentConfig', 'roomMarkers']);
+    const markers = collection.getIn(["currentConfig", "markers"]);
+    const roomMarkers = collection.getIn(["currentConfig", "roomMarkers"]);
 
     const markersPlugin = PSV.getPlugin(MarkersPlugin);
-    markers?.mapKeys(marker => markersPlugin?.showMarker(marker));
-    roomMarkers?.mapKeys(marker => markersPlugin?.showMarker(marker));
+    markers?.mapKeys((marker) => markersPlugin?.showMarker(marker));
+    roomMarkers?.mapKeys((marker) => markersPlugin?.showMarker(marker));
   }
 };
 
 export const showAutoRotation = () => {
   const { interaction } = store.getState();
-  const PSV = interaction.get('PSV');
+  const PSV = interaction.get("PSV");
 
   PSV.startAutorotate();
 
   const stopAutorotate = () => {
     PSV.stopAutorotate();
-    window.removeEventListener('mousemove', stopAutorotate);
+    window.removeEventListener("mousemove", stopAutorotate);
   };
 
-  window.addEventListener('mousemove', stopAutorotate);
+  window.addEventListener("mousemove", stopAutorotate);
 };
 
-export const animateClusterMarker = category => {
+export const animateClusterMarker = (category) => {
   const { interaction } = store.getState();
-  const PSV = interaction.get('PSV');
-  const speed = '4rpm';
+  const PSV = interaction.get("PSV");
+  const speed = "4rpm";
   const marker = PSV.plugins.markers.getMarker(category);
   const { longitude, latitude } = marker.props.position;
   return PSV.animate({ longitude, latitude, speed });
