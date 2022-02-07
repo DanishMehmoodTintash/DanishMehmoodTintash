@@ -1,0 +1,40 @@
+// Grays
+$gray: #999999;
+$light-gray: #cccccc;
+$med-gray: #666666;
+
+// theme
+$background-color: #f7f7f7;
+$onyx: #313131;
+// $med-blue: #004680;
+$pale-blue: #dbebf4;
+$dark-blue: #002855;
+$beacon-blue: #147bd1;
+$cornflower-blue: #b9cbf9;
+
+// Primary Color Palette
+$beacon-blue: #147bd1;
+$flagship-blue: #1a4e8a;
+$powder-blue: #dbebf4;
+
+// Secondary Color Palette
+$deep-navy: #002852;
+$black: #000000;
+$promo-red: #ee2737;
+
+// Monochrome Color Palette
+$dark-gray: #333333;
+$white: #ffffff;
+
+// scroll bar
+$scroll-thumb: #c4c4c4;
+$scroll-track: #f1f1f1;
+$jet-black: #313131;
+
+//outline
+$havelock-blue: #5d9dd5;
+$picton-blue: #5e9ed6;
+
+@function with-opacity($color, $opacity) {
+  @return #{$color}#{$opacity};
+}

@@ -1,0 +1,125 @@
+@mixin for-xl-device() {
+  @media (min-width: 1200px) {
+    @content;
+  }
+}
+
+@mixin for-normal-device() {
+  @media (min-width: 700px) {
+    @content;
+  }
+}
+
+@mixin for-large-device() {
+  @media (max-width: 1199px) and (min-width: 992px) {
+    @content;
+  }
+}
+
+@mixin for-ipad-device() {
+  @media (max-width: 1049px) and (min-width: 992px) {
+    @content;
+  }
+}
+
+@mixin for-large-medium-device() {
+  @media (max-width: 991px) and (min-width: 767px) {
+    @content;
+  }
+}
+
+@mixin for-small-device() {
+  @media (max-width: 768px) and (min-width: 576px) {
+    @content;
+  }
+}
+
+@mixin for-mobile-device() {
+  @media (max-width: 575px) and (min-width: 230px) {
+    @content;
+  }
+}
+
+@mixin for-other-devices() {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin devices() {
+  @media (max-width: 600px) {
+    @content;
+  }
+}
+
+@mixin for-medium-device() {
+  @media (max-width: 991px) and (min-width: 767px) {
+    @content;
+  }
+}
+
+@mixin for-testing-device() {
+  @media (max-width: 576px) and (min-width: 430px) {
+    @content;
+  }
+}
+
+@mixin for-mobile-device() {
+  @media (max-width: 575px) and (min-width: 230px) {
+    @content;
+  }
+}
+
+@mixin for-test-device() {
+  @media (max-width: 575px) and (min-width: 400px) {
+    @content;
+  }
+}
+
+@mixin for-large-screen-height() {
+  @media (min-height: 850px) and (max-width: 530px) {
+    @content;
+  }
+}
+
+@mixin for-medium-screen-height() {
+  @media (max-height: 800px) and (max-width: 530px) {
+    @content;
+  }
+}
+
+@mixin for-small-screen-height() {
+  @media (max-height: 700px) and (max-width: 530px) {
+    @content;
+  }
+}
+
+@mixin for-extra-small-screen-height() {
+  @media (max-height: 600px) and (max-width: 530px) {
+    @content;
+  }
+}
+
+@mixin for-extra-smaller-screen-height() {
+  @media (max-height: 500px) and (max-width: 530px) {
+    @content;
+  }
+}
+
+@mixin for-mbl-medium-screen-height() {
+  @media (max-height: 700px) and (min-height: 600px) {
+    @content;
+  }
+}
+
+@mixin for-mbl-small-screen-height() {
+  @media (max-height: 600px) and (min-height: 500px) {
+    @content;
+  }
+}
+
+@mixin for-large-screen() {
+  @media (min-width: 1500px) {
+    @content;
+  }
+}

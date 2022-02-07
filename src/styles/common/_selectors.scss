@@ -1,0 +1,7 @@
+@function headings($before: '', $from: 1, $to: 6, $after: '') {
+  @if $from == $to {
+    @return '#{$before} h#{$from}#{$after}';
+  } @else {
+    @return '#{$before} h#{$from}#{$after}, '+headings($before, $from + 1, $to, $after);
+  }
+}

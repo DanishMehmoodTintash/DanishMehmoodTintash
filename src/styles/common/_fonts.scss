@@ -1,0 +1,49 @@
+@font-face {
+  font-family: ProximaNova;
+  src: url('/assets/fonts/ProximaNova-Regular.otf');
+}
+
+@font-face {
+  font-family: ProximaLight;
+  src: url('/assets/fonts/Proxima Nova Alt Light.otf');
+}
+
+@font-face {
+  font-family: ProximaBold;
+  src: url('/assets/fonts/ProximaNova-Bold.otf');
+}
+
+@font-face {
+  font-family: ProximaSemiBold;
+  src: url('/assets/fonts/ProximaNova-Sbold.otf');
+}
+
+@font-face {
+  font-family: BrandonBold;
+  src: url('/assets/fonts/Brandon_bld.otf');
+}
+
+@font-face {
+  font-family: BrandonLight;
+  src: url('/assets/fonts/Brandon_light.otf');
+}
+
+@font-face {
+  font-family: BrandonMedium;
+  src: url('/assets/fonts/Brandon_med.otf');
+}
+
+@font-face {
+  font-family: Brandon;
+  src: url('/assets/fonts/Brandon_reg.otf');
+}
+
+$proxima: ProximaNova;
+$proxima-light: ProximaLight;
+$proxima-bold: ProximaBold;
+$proxima-semibold: ProximaSemiBold;
+
+$brandon: Brandon;
+$brandon-light: BrandonLight;
+$brandon-bold: BrandonBold;
+$brandon-medium: BrandonMedium;

@@ -1,0 +1,231 @@
+.filter-page {
+  background-color: #f7f7f7;
+  height: 80vh;
+  overflow-y: scroll;
+  position: relative;
+  z-index: 9;
+  padding: 1.5rem 4% 25%;
+
+  > p {
+    padding-bottom: 1rem;
+  }
+
+  .filter-heading-container {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 3%;
+
+    @include devices() {
+      padding-bottom: 0%;
+    }
+
+    > button {
+      display: flex;
+      cursor: pointer;
+      margin-bottom: 5%;
+
+      &:disabled {
+        opacity: 0.5;
+        color: $dark-gray;
+        cursor: not-allowed !important;
+      }
+    }
+  }
+  .clear-all-btn {
+    color: #147bd1;
+  }
+  .filter-heading {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.26em;
+  }
+  .filter-count-box {
+    display: flex;
+  }
+  .filter-count {
+    width: 20.5px;
+    height: 20.5px;
+    border-radius: 50%;
+    background-color: #147bd1;
+    text-align: center;
+    margin-left: 0.65rem;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 11px;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .filter-count > * {
+    height: initial;
+
+    @include devices() {
+      height: initial;
+    }
+  }
+
+  .filter-tag {
+    width: 86%;
+    float: left;
+    margin-bottom: 0;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    margin-left: 0.3rem;
+    padding-bottom: 3%;
+    color: $dark-gray;
+  }
+
+  .icon {
+    cursor: pointer;
+    float: right;
+  }
+
+  .line {
+    border: none;
+    border-top: 1px solid #ccc;
+    width: 100%;
+    margin: 0 auto;
+    padding-top: 5%;
+  }
+
+  .collapsible-container {
+    display: flex;
+    padding-top: 0.5rem !important;
+
+    > div {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .selected-state-marker {
+      height: 6px;
+      width: 6px;
+      background-color: $beacon-blue;
+      border-radius: 50%;
+      position: absolute;
+      left: 0%;
+    }
+
+    .checkbox-container {
+      display: block;
+      position: relative;
+      font-size: 1.1em;
+      cursor: pointer;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      line-height: 1.3em;
+      padding-left: 9.6%;
+      margin-bottom: 1rem;
+      font-weight: bolder;
+
+      @include devices() {
+        padding-left: 11.5%;
+      }
+
+      input[type='checkbox'] {
+        height: 0;
+        width: 0;
+
+        &.hidden {
+          visibility: hidden;
+        }
+
+        &:focus ~ .checkmark {
+          outline: $havelock-blue solid 1px;
+          box-shadow: 0 0px 8px $picton-blue;
+        }
+      }
+
+      .checkmark,
+      input:checked ~ .checkmark {
+        background-color: #fff;
+
+        &::after {
+          display: block;
+        }
+      }
+
+      .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 17px;
+        width: 17px;
+        border: 1px solid $dark-gray;
+        box-sizing: border-box;
+        border-radius: 2px;
+
+        &::after {
+          content: '';
+          position: absolute;
+          display: none;
+          left: 6px;
+          top: 1px;
+          width: 4px;
+          height: 11px;
+          border: solid #000;
+          border-width: 0 1px 1px 0;
+          -webkit-transform: rotate(45deg);
+          -ms-transform: rotate(45deg);
+          transform: rotate(45deg);
+        }
+      }
+    }
+  }
+}
+
+.filter-page::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-buttons {
+  position: absolute;
+  bottom: 0%;
+  left: 0;
+  right: 0;
+  z-index: 99999;
+  background: #f7f7f7;
+  padding: 1rem 0;
+
+  > div {
+    display: flex;
+    justify-content: space-evenly;
+
+    > button {
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed !important;
+        border: none;
+      }
+    }
+  }
+
+  button {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.1em;
+    line-height: 20px;
+    text-align: center;
+    color: $dark-gray;
+    background: #ffffff;
+    border: 1px solid black;
+    box-sizing: border-box;
+    border-radius: 999px;
+    width: 41%;
+    padding: 4.3% 4% 4.7% 4%;
+
+    @include for-other-devices() {
+      padding: 4.3% 4% 4.7% 4%;
+    }
+
+    &:last-child {
+      background-color: $dark-gray;
+      color: $white;
+    }
+  }
+}

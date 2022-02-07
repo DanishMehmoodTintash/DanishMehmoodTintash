@@ -1,0 +1,150 @@
+@import './common/mixins';
+@import './common/colors';
+
+.overlay {
+  position: absolute;
+  z-index: 9999999;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+  background: $onyx;
+  opacity: 0.5;
+}
+.change-room-model {
+  z-index: 9999999;
+}
+
+.reset-container {
+  width: 28.65%;
+  position: absolute;
+  z-index: 9999999;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  @include devices() {
+    width: 88.15%;
+  }
+}
+
+.change-room-container {
+  left: 37%;
+  @include devices() {
+    left: 50%;
+    width: 87%;
+  }
+}
+
+.reset-popup {
+  position: relative;
+  width: 100%;
+  text-align: center;
+  z-index: 9999;
+  cursor: pointer;
+  padding: 4.85%;
+  background: $white;
+  border-radius: 10px;
+
+  .reset-heading {
+    font-style: normal;
+    font-size: 1.81em;
+    line-height: 28px;
+    text-align: center;
+    color: #313131;
+    padding-top: 6.7%;
+    padding-bottom: 4%;
+    width: 70%;
+    margin: auto;
+
+    @include devices() {
+      width: 90%;
+    }
+  }
+  .curated-popup {
+    padding-top: 8%;
+  }
+
+  .curated-heading {
+    width: 100%;
+    padding-bottom: 5%;
+  }
+
+  .reset-desc {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1.11em;
+    line-height: 1.56em;
+    text-align: center;
+    color: $med-gray;
+    width: 80%;
+    margin: auto;
+
+    @include devices() {
+      width: 98%;
+    }
+  }
+
+  .reset-popup-btn {
+    font-style: normal;
+    font-size: 1.11em;
+    line-height: 16px;
+    text-align: center;
+    color: $white;
+    background: $beacon-blue;
+    border-radius: 999px;
+    width: 100%;
+    margin: 10% auto auto;
+    padding: 4.5% 3%;
+    border: none;
+
+    &:hover,
+    &:focus {
+      background: $flagship-blue;
+    }
+
+    @include devices() {
+      margin: 10% auto auto;
+      padding: 5% 3%;
+    }
+  }
+
+  .curated-room-popup-btn {
+    padding: 6% 3%;
+    margin: 7% auto 2%;
+    @include devices() {
+      padding: 7.5% 3%;
+    }
+  }
+
+  .cancel-reset-option {
+    background: $white;
+    margin: 3.5% 0;
+    color: $flagship-blue;
+    border: 1.5px solid $flagship-blue;
+
+    &:hover,
+    &:focus {
+      background: $powder-blue;
+    }
+  }
+  .cancel-curated-option {
+    padding: 5.5% 3%;
+    background: $white;
+    margin: 3.5% 0;
+    color: $beacon-blue;
+    border: 1.5px solid $beacon-blue;
+
+    &:hover,
+    &:focus {
+      background: $powder-blue;
+    }
+    @include devices() {
+      padding: 7% 3%;
+    }
+  }
+}
