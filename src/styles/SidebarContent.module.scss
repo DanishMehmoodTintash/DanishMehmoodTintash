@@ -1,13 +1,13 @@
-@import './common/mixins';
-@import './common/colors';
-@import './common/fonts';
+@import "./common/mixins";
+@import "./common/colors";
+@import "./common/fonts";
 
-@import './CategoriesList.module.scss';
-@import './ProductsList.module.scss';
-@import './ShoppingList.module.scss';
-@import './FiltersPage.module.scss';
-@import './ProductDetailsPage.module.scss';
-@import './CuratedRoomList.module.scss';
+@import "./CategoriesList.module.scss";
+@import "./ProductsList.module.scss";
+@import "./ShoppingList.module.scss";
+@import "./FiltersPage.module.scss";
+@import "./ProductDetailsPage.module.scss";
+@import "./CuratedRoomList.module.scss";
 
 .category-loader {
   position: absolute;
@@ -104,4 +104,8 @@
     right: -5%;
     top: -3%;
   }
+}
+.close-btn {
+  display: flex;
+  justify-content: flex-end;
 }

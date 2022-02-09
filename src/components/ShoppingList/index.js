@@ -21,6 +21,7 @@ const ShoppingList = ({
   currentCollection,
   markerDropdownCategories,
   markerSelected,
+  onItemRemove,
 }) => {
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const [...categories] = selectedItemsMap.keys();
@@ -102,6 +103,13 @@ const ShoppingList = ({
 
               return item ? (
                 <li className={styles["product-container"]} key={category}>
+                  <button
+                    className={`${styles["close-btn"]}`}
+                    onClick={() => onItemRemove(category)}
+                    aria-label="Close Panel"
+                  >
+                    <img alt="" src={`${config.s3BucketUrl}/utils/close.svg`} />
+                  </button>
                   <a
                     className={styles["container-link"]}
                     href={item.get("shop_it_url")}
