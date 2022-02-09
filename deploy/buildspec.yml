@@ -1,0 +1,25 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      nodejs: 10
+    commands:
+      - echo '*** ls ***'
+      - ls -l
+  build:
+    commands:
+      - echo '*** build phase ***'
+      - echo '*** ls ***'
+      - ls -l
+      - cd projectDEC/dj_app/apps/design_squad_frontend/shop_by_room
+      - rm package-lock.json
+      - echo '*** ls ***'
+      - ls -l
+      - npm install
+      - echo '*** build ENV ***' $BUILD_ENV
+      - npm run build:$BUILD_ENV
+  post_build:
+    commands:
+      - echo '*** post_build phase ***'
+      - npm run deploy:$BUILD_ENV
+      - echo '*** Deployment Finished ***'

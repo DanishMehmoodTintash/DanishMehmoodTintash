@@ -1,0 +1,88 @@
+{
+  "name": "design-squad",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@moiz.imran/photo-sphere-viewer": "^4.2.5",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "axios": "^0.21.1",
+    "axios-cache-adapter": "^2.7.3",
+    "immutable": "*",
+    "jszip": "^3.6.0",
+    "lodash": "^4.17.21",
+    "mixpanel-browser": "^2.41.0",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.2",
+    "react-accessible-dropdown-menu-hook": "^2.3.0",
+    "react-clamp-lines": "^3.0.2",
+    "react-collapsible": "^2.8.3",
+    "react-dom": "^17.0.2",
+    "react-escape-outside": "^0.1.2",
+    "react-loader-spinner": "^4.0.0",
+    "react-redux": "^7.2.4",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.3",
+    "react-share": "^4.4.0",
+    "react-to-print": "^2.14.3",
+    "redux": "^4.0.1",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
+    "sass": "^1.35.1",
+    "storage-factory": "^0.2.0",
+    "styled-components": "^5.0.0",
+    "styled-normalize": "^8.0.6",
+    "web-vitals": "^1.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.0",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "eslint": "^7.2.0",
+    "eslint-config-airbnb": "18.2.1",
+    "eslint-config-node": "^4.1.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "prettier": "^2.3.0",
+    "prettier-stylelint": "^0.4.2",
+    "s3-folder-upload": "^2.3.5",
+    "stylelint": "^13.13.1",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-prettier": "^1.2.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "build:development": "REACT_APP_BUILD_ENV=development npm run build",
+    "build:staging": "REACT_APP_BUILD_ENV=staging npm run build",
+    "build:production": "REACT_APP_BUILD_ENV=production npm run build",
+    "deploy:development": "REACT_APP_BUILD_ENV=development node deploy/upload_build.js",
+    "deploy:staging": "REACT_APP_BUILD_ENV=staging node deploy/upload_build.js",
+    "deploy:production": "REACT_APP_BUILD_ENV=production node deploy/upload_build.js"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

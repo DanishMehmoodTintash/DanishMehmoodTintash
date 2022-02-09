@@ -1,0 +1,9 @@
+{
+  "AWS": {
+    "accessKeyId": "AKIAI4QSUFO74BJYO3FA",
+    "secretAccessKey": "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",
+    "region": "us-east-1",
+    "bucket": "3d-shop-by-room-production",
+    "distributionId": "E211RVJC7VS1IQ"
+  }
+}

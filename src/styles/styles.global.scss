@@ -1,0 +1,441 @@
+@import './common/misc.scss';
+@import './common/mixins.scss';
+@import './common/fonts.scss';
+@import './common/colors.scss';
+@import './common/selectors.scss';
+
+@import './external/photo-sphere-viewer.scss';
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-size: 1.1vw;
+  line-height: 1.7vw;
+  text-align: left;
+}
+
+@media screen and (max-width: 1024px) and (min-width: 700px) {
+  html,
+  body {
+    font-size: 1.24vw;
+    line-height: 1.4vw;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  html,
+  body {
+    font-size: 4.225vw;
+    line-height: 6vw;
+  }
+}
+
+body::after {
+  content: url($s3-bucket + '/utils/your-selections-selected.svg')
+    url($s3-bucket + '/utils/save-selected.svg')
+    url($s3-bucket + '/utils/preset-rooms-selected.svg')
+    url($s3-bucket + '/utils/reset-selected.svg')
+    url($s3-bucket + '/utils/filter-contract.svg')
+    url($s3-bucket + '/utils/filter-expand.svg')
+    url($s3-bucket + '/utils/room-change.svg')
+    url($s3-bucket + '/utils/add-item-shopping-list.svg');
+  z-index: -1;
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+*,
+:after,
+:before {
+  box-sizing: border-box;
+  font-family: $proxima;
+}
+
+#{headings()} {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  margin-top: 0;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+button {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: $white;
+  cursor: pointer;
+}
+
+canvas:not(:first-child) {
+  display: none;
+}
+
+a,
+a:focus,
+a:hover,
+a:visited {
+  text-decoration: none;
+  color: #000;
+}
+
+.proxima {
+  font-family: $proxima;
+}
+
+.proxima-light {
+  font-family: $proxima-light;
+}
+
+.proxima-bold {
+  font-family: $proxima-bold;
+}
+
+.proxima-semibold {
+  font-family: $proxima-semibold;
+}
+
+.brandon {
+  font-family: $brandon;
+}
+
+.brandon-light {
+  font-family: $brandon-light;
+}
+
+.brandon-bold {
+  font-family: $brandon-bold;
+}
+
+.brandon-medium {
+  font-family: $brandon-medium;
+}
+
+.app-loader {
+  width: 100vw;
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lds-ring {
+  width: 40px;
+  height: 40px;
+  margin: 0px;
+
+  div {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.overlay {
+  position: absolute;
+  z-index: 99999999;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+  background: $onyx;
+  opacity: 0.5;
+  display: none;
+
+  &.visible {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &.transparent {
+    background-color: with-opacity($dark-gray, '00');
+  }
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.popup-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  li {
+    list-style: none;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+}
+
+.marker-box-container {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+}
+
+.marker-cluster-container {
+  width: 220px;
+  height: 279px;
+  background: #ffffff;
+  border-radius: 5px;
+  padding: 28px;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 16px;
+  position: absolute;
+  top: -279px;
+  right: -110px;
+}
+
+.marker-box {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: with-opacity($dark-gray, 50);
+  animation-name: marker-animate;
+  animation-duration: 1.75s;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in;
+
+  @include devices() {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@-webkit-keyframes marker-animate {
+  0% {
+    background: with-opacity($dark-gray, 25);
+    transform: scale(0.7);
+  }
+  100% {
+    background: with-opacity($dark-gray, 50);
+    transform: scale(1);
+  }
+}
+
+@keyframes marker-animate {
+  0% {
+    background: with-opacity($dark-gray, 25);
+    transform: scale(0.7);
+  }
+  100% {
+    background: with-opacity($dark-gray, 50);
+    transform: scale(1);
+  }
+}
+
+.back-layer {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: white;
+  border-radius: 50%;
+  top: 4px;
+  left: 4px;
+
+  @include devices() {
+    top: 3px;
+    left: 3px;
+    width: 10px;
+    height: 10px;
+  }
+}
+
+.marker-container {
+  width: 22px;
+  height: 22px;
+
+  @include devices() {
+    width: 40px;
+    height: 40px;
+  }
+
+  &:hover > .back-layer {
+    background: $beacon-blue !important;
+  }
+}
+
+.room-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .room-marker-container {
+    width: 30px;
+    height: 30px;
+    background: white;
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+    img {
+      width: 15.69px;
+    }
+
+    @include devices() {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  .room-marker-text {
+    margin-top: 5px;
+    background-color: with-opacity($dark-gray, 50);
+    border-radius: 11px;
+    padding: 1px 10px;
+    color: $white;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 14px;
+  }
+}
+
+.marker-selected-state {
+  background: $beacon-blue !important;
+}
+
+.paused-animation {
+  animation-play-state: paused;
+  transform: scale(1) !important;
+
+  @include devices() {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    top: -3px;
+    left: -3px;
+    position: absolute;
+  }
+}
+
+* {
+  @include devices() {
+    outline: none;
+  }
+}
+
+.relative {
+  position: relative;
+  button {
+    color: $dark-gray;
+  }
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.dropdown-menu-container {
+  min-width: 150px;
+  position: absolute;
+  z-index: 1000;
+  flex-direction: column;
+  border: 1px solid #e5e5e5;
+  background-color: white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  display: none;
+
+  &.visible {
+    display: flex;
+  }
+}
+
+.sort-dropdown {
+  button {
+    color: $dark-gray;
+  }
+}
+
+.Collapsible__trigger {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  padding-bottom: 1rem;
+  cursor: pointer;
+}
+
+#photosphere {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+}
+
+.actions {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  padding: 5% 0;
+  z-index: 1000000;
+
+  .close-list {
+    text-align: right;
+    display: flex;
+    align-items: center;
+  }
+
+  .arrow {
+    border: solid black;
+    border-width: 0 1.3px 1.3px 0;
+    display: inline-block;
+    padding: 3px;
+    margin-right: 5px;
+    margin-bottom: 1px;
+  }
+
+  .actions-left {
+    text-align: left;
+    font-size: 1.1em;
+
+    .left {
+      transform: rotate(135deg);
+    }
+
+    .pointer-all-items {
+      cursor: pointer;
+      font-size: 1em;
+      color: $dark-gray;
+
+      &:focus,
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    &.hidden {
+      visibility: hidden;
+    }
+  }
+
+  .actions-right {
+    cursor: pointer;
+    text-align: right;
+    position: relative;
+
+    img {
+      max-width: 1.04em;
+    }
+  }
+}

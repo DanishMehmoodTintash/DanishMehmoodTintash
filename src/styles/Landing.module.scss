@@ -1,0 +1,181 @@
+@import './common/mixins';
+@import './common/fonts';
+@import './common/colors';
+
+.container {
+  position: absolute;
+  z-index: 9999999;
+  top: 0px;
+  width: 100vw;
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+  background: $powder-blue;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @include devices() {
+    padding: 5%;
+  }
+
+  .box {
+    background: $white;
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: fit-content;
+
+    @include devices() {
+      justify-content: flex-start;
+      padding-bottom: 10%;
+      width: 100%;
+    }
+
+    @include for-extra-small-screen-height() {
+      overflow: scroll;
+      height: 100%;
+    }
+
+    .heading {
+      font-style: normal;
+      font-size: 1.025em;
+      line-height: 1.15em;
+      text-align: center;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 7%;
+      color: $black;
+      font-family: $proxima-semibold;
+
+      @include devices() {
+        padding-top: 11%;
+        margin-top: 0%;
+        line-height: 16px;
+        letter-spacing: 0.05em;
+      }
+    }
+
+    .title {
+      font-size: 1.66em;
+      line-height: 1.24em;
+      text-align: center;
+      color: $dark-gray;
+      width: 80%;
+      margin-top: 2.6%;
+      font-family: $proxima-light;
+
+      @include devices() {
+        margin: 7% 0;
+        padding-left: 5%;
+        padding-right: 5%;
+        width: 100%;
+        font-size: 1.55em;
+      }
+    }
+  }
+
+  .style {
+    padding-bottom: 10%;
+    display: flex;
+    width: 80%;
+    flex: 1;
+    font-family: $proxima;
+
+    @include devices() {
+      display: block;
+      padding-bottom: 0%;
+      width: auto;
+    }
+
+    .mbl-padding {
+      @include devices() {
+        margin-bottom: 12%;
+        background: $white;
+      }
+    }
+
+    .box-width {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+
+      @include devices() {
+        width: 100%;
+        margin-left: 0%;
+      }
+
+      .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+      }
+
+      .box-circle {
+        width: 17%;
+        margin-top: 4%;
+        margin-bottom: 8%;
+        padding-top: 8.25%;
+
+        @include devices() {
+          width: 16%;
+          margin: 0 0 3.5%;
+          padding-top: 0%;
+        }
+      }
+
+      .img-content {
+        font-size: 1.26em;
+        line-height: 1.5em;
+        text-align: center;
+        color: $dark-gray;
+        width: 100%;
+        padding: 0 5%;
+
+        span {
+          display: none;
+        }
+
+        @include devices() {
+          width: 84%;
+          height: auto;
+
+          span {
+            display: inline;
+          }
+        }
+      }
+
+      .button {
+        font-size: 1.1em;
+        line-height: 1.142em;
+        text-align: center;
+        background: $beacon-blue;
+        border-radius: 999px;
+        padding: 5% 10% 5% 10%;
+        margin-top: 5%;
+        color: $white;
+        cursor: pointer;
+        border: none;
+        width: fit-content;
+        font-weight: 600;
+
+        &:hover,
+        &:focus {
+          background: $dark-blue;
+        }
+
+        @include devices() {
+          padding: 4.5% 8%;
+          margin-top: 3%;
+          font-size: 1.03em;
+        }
+      }
+    }
+  }
+}

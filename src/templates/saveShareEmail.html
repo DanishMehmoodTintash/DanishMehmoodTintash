@@ -1,0 +1,529 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!--[if !mso]><!-->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!--<![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <!--[if (gte mso 9)|(IE)]>
+    <style type="text/css">
+        table {border-collapse: collapse;}
+    </style>
+    <![endif]-->
+    <style>
+        /* Basics */
+        @font-face {
+            font-family: Proxima;
+            src: url("https://3d-shopping.s3.amazonaws.com/dev/utils/ProximaNova-Reg.otf");
+        }
+        body {
+            margin: 0 !important;
+            padding: 0;
+            background-color: #ffffff;
+        }
+        table {
+            border-spacing: 0;
+            font-family: sans-serif;
+            color: #333333;
+        }
+        td {
+            padding: 0;
+        }
+        img {
+            border: 0;
+        }
+
+        .wrapper {
+            width: 100%;
+            table-layout: fixed;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+        .webkit {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .outer {
+            Margin: 0 auto;
+            width: 100%;
+            max-width: 600px;
+        }
+        .inner {
+            padding: 10px 10px 0px;
+        }
+        .contents {
+            width: 100%;
+        }
+        p {
+            Margin: 0;
+        }
+        a {
+            color: #ee6a56;
+        }
+        .h1 {
+            font-size: 21px;
+            font-weight: bold;
+            Margin-bottom: 18px;
+        }
+        .h2 {
+            font-size: 18px;
+            font-weight: bold;
+            Margin-bottom: 12px;
+        }
+        .full-width-image img {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+        }
+
+        /* One column layout */
+        .one-column .contents {
+            text-align: left;
+        }
+
+        /*Two column layout*/
+        .two-column {
+            text-align: center;
+            font-size: 0;
+        }
+        .two-column .column {
+            width: 46%;
+            display: inline-block;
+            vertical-align: top;
+        }
+        .two-column .contents {
+            font-size: 14px;
+            text-align: left;
+        }
+        .two-column img {
+            width: 75%;
+            height: auto;
+            max-height: 100%;
+            vertical-align: top;
+        }
+        .two-column .text {
+            padding-top: 10px;
+            color: #313131;
+            font-family: Helvetica;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 16px;
+            text-align: center;
+            text-align: left;
+            padding-right: 15%;
+            padding-left: 10%;
+            padding-bottom: 12%;
+        }
+
+        .align-img {
+            background-image: url("http://3d-shopping.s3.amazonaws.com/dev/utils/email-white-bg.png");
+            height: 300px;
+            width: 280px;
+            text-align: center;
+            padding: 10% 0%;
+        }
+
+        /*Three column layout*/
+        .three-column {
+            text-align: center;
+            font-size: 0;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        .three-column .column {
+            width: 100%;
+            max-width: 200px;
+            display: inline-block;
+            vertical-align: top;
+        }
+        .three-column img {
+            width: 100%;
+            max-width: 180px;
+            height: auto;
+        }
+        .three-column .contents {
+            font-size: 14px;
+            text-align: center;
+        }
+        .three-column .text {
+            padding-top: 10px;
+        }
+
+        /* Left sidebar layout */
+        .left-sidebar {
+            text-align: center;
+            font-size: 0;
+        }
+        .left-sidebar .column {
+            width: 100%;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .left-sidebar .left {
+            max-width: 100px;
+        }
+        .left-sidebar .right {
+            max-width: 500px;
+        }
+        .left-sidebar .img {
+            width: 100%;
+            max-width: 80px;
+            height: auto;
+        }
+        .left-sidebar .contents {
+            font-size: 14px;
+            text-align: center;
+        }
+        .left-sidebar a {
+            color: #85ab70;
+        }
+
+        /* Right sidebar layout */
+        .right-sidebar {
+            text-align: center;
+            font-size: 0;
+        }
+        .right-sidebar .column {
+            width: 100%;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .right-sidebar .left {
+            max-width: 100px;
+        }
+        .right-sidebar .right {
+            max-width: 500px;
+        }
+        .right-sidebar .img {
+            width: 100%;
+            max-width: 80px;
+            height: auto;
+        }
+        .right-sidebar .contents {
+            font-size: 14px;
+            text-align: center;
+        }
+        .right-sidebar a {
+            color: #70bbd9;
+        }
+        .btm-btn{
+            display: block;
+            background: #002854;
+            border-radius: 50px;
+            text-transform: uppercase;
+            border: none;
+            width: 100%;
+            color: #ffffff;
+            padding: 6% 0%;
+            font-size: 14px;
+            line-height: 17px;
+            text-decoration: underline;
+            text-decoration-color: #002854;
+            font-style: normal;
+            letter-spacing: 1px;
+            text-align: center;
+            font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+        }
+        .href-btm-btn {
+            margin: 7% auto 12%;
+            cursor: pointer;
+            display: block;
+            width: 53%;
+        }
+        .line {
+            width: 77%;
+            border-width: thin;
+            border-color: #D8D8D8;
+            opacity: 0.3;
+        }
+        .address {
+            text-align: center;
+            color: #8D8D8D;
+            font-size: 13px;
+            font-family: Helvetica;
+            padding-top: 4.5%;
+            padding: 4% 0 6%;
+            opacity: 0.7;
+        }
+        .logo-cnt {
+            text-align: center;
+            padding: 4% 0% 0%;
+            background: #ffffff;
+            display: block;
+            overflow: hidden;
+            text-align: center;
+        }
+        .logo-img {
+            overflow: hidden;
+            display: block;
+            width: 43%;
+            margin: 0 auto;
+        }
+        .advert-cnt {
+            display: block;
+            margin-top: 7%;
+            overflow: hidden;
+            width: 100%;
+        }
+        .advert-head {
+            text-align: center;
+            font-family: Helvetica;
+            font-style: normal;
+            font-weight: 700;
+            font-size: 34px;
+            line-height: 60px;
+            color: #002854;
+            padding: 7% 0% 7%;
+        }
+        .render-img {
+            text-align: center;
+        }
+        .render-scene {
+            width: 507px;
+            height: 269px;
+        }
+        .advert-text {
+            width: 85%;
+            margin: 0 auto;
+            overflow: hidden;
+            display: block;
+            font-family: Helvetica;
+            font-weight: 300;
+            font-size: 16px;
+            line-height: 26px;
+            text-align: center;
+            color: #000000;
+            padding: 6.5% 0%;
+        }
+        .href-advert-button {
+            width: 36%;
+            display: block;
+            margin: 0px auto 8%;
+        }
+        .advert-btn {
+            background: #ffc62c;
+            border-radius: 50px;
+            padding: 7% 0%;
+            display: block;
+            width: 100%;
+            color: #004680;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 17px;
+            letter-spacing: 1px;
+            border: none;
+            text-decoration: underline;
+            text-decoration-color: #ffc62c;
+            margin-bottom: 20%;
+            font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        .spacer-img {
+            display: block;
+        }
+        .taste {
+            text-transform: uppercase;
+            text-align: center;
+            letter-spacing: 1px;
+            font-family: Helvetica;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 13px;
+            line-height: 24px;
+            color: #004680;
+            padding-bottom: 1.5%;
+        }
+        .nursery-list {
+            color: #313131;
+            font-family: Helvetica;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 24px;
+            line-height: 24px;
+            text-align: center;
+        }
+        .header-text{
+            font-family: Helvetica;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 12px;
+            text-align: center;
+            color: #004680;
+            padding-top: 2%;
+            padding-bottom: 3.3%;
+        }
+        .logo-mbl{
+            display: none;
+        }
+        .logo-web{
+            display: block;
+        }
+
+
+        /*Media Queries*/
+        @media screen and (max-width: 520px) {
+            .two-column .column,
+            .three-column .column {
+                max-width: 100% !important;
+            }
+            .two-column img {
+                max-width: 50% !important;
+            }
+            .three-column img {
+                max-width: 50% !important;
+            }
+        }
+        @media screen and (max-width: 600px) {
+            .logo-img {
+                width: 100% !important;
+            }
+            .logo-mbl{
+                display: block !important;
+            }
+            .logo-web{
+                display: none !important;
+            }
+            .header-text{
+                display: none !important;
+            }
+            .href-advert-button {
+                width: 45%;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <center class="wrapper">
+        <div class="webkit">
+            <table class="outer" align="center">
+                <tr>
+                    <td class="logo-cnt">
+                        <img class="logo-img logo-web" src="https://3d-shopping.s3.amazonaws.com/dorm-dev/utils/BBBY.png" alt="" />
+                        <p class="header-text">Sent By Our Design Partners at Decorist</p>
+                    </td>
+                    <td class="logo-cnt logo-mbl">
+                        <img class="logo-img" src="https://3d-shopping.s3.amazonaws.com/dorm-dev/utils/save-email-header.png" alt="" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="one-column">
+                        <img class="spacer-img" src="http://3d-shopping.s3.amazonaws.com/dorm-dev/utils/save-dorm-design.png"/>
+                        <div class="advert-cnt">
+                            <table width="100%">
+                                <tr>
+                                    <td class="render-img">
+                                        <img class="render-scene" src="{{share_image}}" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <table width="100%">
+                                <tr>
+                                    <td class="advert-text">
+                                        Heres is your customized room design. Awesome work!
+                                        All of the items in your room are available to purchase
+                                        from your design—find your item selections below. Still
+                                        thinking about it? Click below to keep designing, or
+                                        forward this to friends or family for feedback.
+                                    </td>
+                                </tr>
+                            </table>
+                            <table width="100%">
+                                <tr>
+                                    <td>
+                                         <a class="href-advert-button" href="{{share_url}}">
+                                              <button style="cursor:pointer;" class="advert-btn">Keep Designing</button>
+                                         </a>
+                                    </td>
+                               </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="one-column">
+                        <table width="100%">
+                            <tr>
+                                <td class="inner contents">
+                                    <p class="taste">You've got great taste!</p>
+                                    <p class="nursery-list">Your Item Selections</p>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="two-column">
+                        {% for item in item_data %}
+                            {% if item != null %}
+                            <div class="column">
+                                <table width="100%">
+                                    <tr>
+                                        <td class="inner">
+                                            <table class="contents">
+
+                                                            <tr>
+                                                    <td class="td-mbl-img align-img">
+                                                        <img src="https://www.legacy.decorist.com/{{ item.thumbnail }}" width="280" alt="" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text">
+                                                        {{ item.name }}
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <table width="100%">
+                            <tr>
+                                <td>
+                                     <a class="href-btm-btn" href="{{shop_your_nursery}}">
+                                      <button style="cursor:pointer;" class="btm-btn">Shop Your Room Design</button>
+                                     </a>
+                                </td>
+                           </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table width="100%">
+                            <tr>
+                                <hr class="line"/>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table width="100%">
+                            <tr>
+                                <td class="address"> Decorist &#8231; &nbsp; 15 Funston Ave &#8231; &nbsp; San Francisco, CA 94129 &#8231; &nbsp; USA </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </center>
+</body>
+</html>
+​

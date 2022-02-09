@@ -1,0 +1,211 @@
+@import './common/mixins';
+@import './common/fonts';
+@import './common/colors';
+@import './common/misc';
+
+$sidebar-width: 26%;
+
+@include for-ipad-device() {
+  $sidebar-width: 30%;
+}
+
+@include for-medium-device() {
+  $sidebar-width: 27%;
+}
+
+@include for-small-device() {
+  $sidebar-width: 37%;
+}
+
+.wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.sidebar {
+  pointer-events: all;
+  width: $sidebar-width;
+  transform: translateX(101%);
+  position: absolute;
+  height: auto;
+  z-index: 999999;
+  background: $background-color;
+  bottom: 0;
+  right: 0;
+  margin: 0 auto;
+  top: 0;
+  transition: transform 0.25s ease-in-out;
+
+  @include devices() {
+    width: 100%;
+    top: $mobile-top-offset;
+    transform: translateY(101%);
+  }
+
+  &.visible {
+    display: block !important;
+    transform: translate(0);
+  }
+}
+
+.menu-btn-container {
+  display: block;
+  overflow: hidden;
+  height: auto;
+  width: auto;
+  position: absolute;
+  top: 0;
+  padding: 2.175% 1.915% 0 0;
+  right: 0;
+  z-index: 999999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  pointer-events: none;
+  transition: right 0.25s ease-in-out;
+
+  &.disabled {
+    opacity: 0.5;
+
+    * {
+      pointer-events: none;
+    }
+  }
+
+  &.translated {
+    right: $sidebar-width;
+  }
+
+  @include devices() {
+    padding: 0;
+
+    img {
+      width: 3.15em;
+    }
+  }
+
+  > div {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    pointer-events: all;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    text-align: center;
+
+    @include devices() {
+      margin: 0 1.6%;
+
+      &:last-child {
+        display: block;
+        position: absolute;
+        right: 0;
+        z-index: 99;
+        top: 0;
+        padding: 6.5% 5.65%;
+      }
+    }
+
+    &:hover > .tooltip-container {
+      display: block;
+
+      @include devices() {
+        display: none;
+      }
+    }
+
+    &:nth-child(2) button {
+      background-image: url($s3-bucket + '/utils/save.svg');
+    }
+
+    &:nth-child(4) button {
+      background-image: url($s3-bucket + '/utils/reset.svg');
+    }
+
+    button {
+      background: transparent;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      display: flex;
+      background-repeat: no-repeat;
+      background-size: contain;
+
+      img {
+        visibility: hidden;
+      }
+    }
+  }
+
+  @include devices() {
+    display: flex;
+    flex-direction: row;
+    top: 0;
+    bottom: 3.7%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 100%;
+    justify-content: center;
+    position: absolute;
+  }
+
+  .reset-button {
+    @include devices() {
+      display: none;
+    }
+  }
+
+  .btn-margin {
+    margin-top: 0.65em;
+
+    @include devices() {
+      margin-top: 0;
+    }
+  }
+}
+
+.tooltip-container {
+  align-items: center;
+  height: 100%;
+  border-radius: 2px;
+  margin-right: 11%;
+  background: rgba(255, 255, 255, 1);
+  position: relative;
+  padding: 4%;
+  width: 12em;
+  display: none;
+  font-family: $proxima;
+  pointer-events: none;
+  font-size: 16px;
+  font-weight: bold;
+}
+.hide-tooltip {
+  display: none !important;
+}
+
+.your-selection-btn {
+  background-image: url($s3-bucket + '/utils/your-selections.svg') !important;
+  @include for-normal-device() {
+    &.selected {
+      background-image: url($s3-bucket + '/utils/your-selections-selected.svg') !important;
+    }
+  }
+}
+
+.product-menu-btn {
+  background-image: url($s3-bucket + '/utils/preset-rooms.svg') !important;
+  @include for-normal-device() {
+    &.selected {
+      background-image: url($s3-bucket + '/utils/preset-rooms-selected.svg') !important;
+    }
+  }
+}
