@@ -1,7 +1,7 @@
-@import './common/mixins';
-@import './common/fonts';
-@import './common/colors';
-@import './common/misc';
+@import "./common/mixins";
+@import "./common/fonts";
+@import "./common/colors";
+@import "./common/misc";
 
 $sidebar-width: 26%;
 
@@ -104,13 +104,18 @@ $sidebar-width: 26%;
     @include devices() {
       margin: 0 1.6%;
 
-      &:last-child {
+      &:nth-last-child(2) {
         display: block;
         position: absolute;
         right: 0;
         z-index: 99;
         top: 0;
         padding: 6.5% 5.65%;
+      }
+
+      &:nth-last-child(1) {
+        position: relative;
+        bottom: 0;
       }
     }
 
@@ -123,11 +128,11 @@ $sidebar-width: 26%;
     }
 
     &:nth-child(2) button {
-      background-image: url($s3-bucket + '/utils/save.svg');
+      background-image: url($s3-bucket + "/utils/save.svg");
     }
 
     &:nth-child(4) button {
-      background-image: url($s3-bucket + '/utils/reset.svg');
+      background-image: url($s3-bucket + "/utils/reset.svg");
     }
 
     button {
@@ -193,19 +198,32 @@ $sidebar-width: 26%;
 }
 
 .your-selection-btn {
-  background-image: url($s3-bucket + '/utils/your-selections.svg') !important;
+  background-image: url($s3-bucket + "/utils/your-selections.svg") !important;
   @include for-normal-device() {
     &.selected {
-      background-image: url($s3-bucket + '/utils/your-selections-selected.svg') !important;
+      background-image: url($s3-bucket + "/utils/your-selections-selected.svg") !important;
+    }
+  }
+}
+
+.full-screen-btn {
+  background-image: url($s3-bucket + "/utils/fullScreen.svg") !important;
+  @include for-normal-device() {
+    &.selected {
+      background-image: url($s3-bucket + "/utils/fullScreen.svg") !important;
     }
   }
 }
 
 .product-menu-btn {
-  background-image: url($s3-bucket + '/utils/preset-rooms.svg') !important;
+  background-image: url($s3-bucket + "/utils/preset-rooms.svg") !important;
   @include for-normal-device() {
     &.selected {
-      background-image: url($s3-bucket + '/utils/preset-rooms-selected.svg') !important;
+      background-image: url($s3-bucket + "/utils/preset-rooms-selected.svg") !important;
     }
   }
+}
+.full-screen-div {
+  position: fixed;
+  bottom: 20px;
 }

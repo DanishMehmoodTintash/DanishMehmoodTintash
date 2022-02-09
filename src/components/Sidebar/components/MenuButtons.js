@@ -1,12 +1,12 @@
-import React, { useMemo } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React, { useMemo } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
-import ToolTip from 'components/IntroScreen/components/Tooltip';
+import ToolTip from "components/IntroScreen/components/Tooltip";
 
-import styles from 'styles/Sidebar.module.scss';
+import styles from "styles/Sidebar.module.scss";
 
-import config from 'config';
+import config from "config";
 
 const MenuButtons = ({
   onShoppingListClick,
@@ -23,7 +23,7 @@ const MenuButtons = ({
 
   const ResetButton = () => {
     return (
-      <button onClick={onResetClick} className={`${styles['reset-btn']}`}>
+      <button onClick={onResetClick} className={`${styles["reset-btn"]}`}>
         <img alt="" src={`${config.s3BucketUrl}/utils/reset.svg`} />
       </button>
     );
@@ -32,20 +32,20 @@ const MenuButtons = ({
   return (
     <>
       <ToolTip
-        tooltipText="View your shopping list, view our curated rooms, and save & share your designs."
+        tooltipText="View your shopping list, view our room vibes, and save & share your designs."
         type="menu"
         enableDevice
       />
       <div
-        className={`${styles['menu-btn-container']} ${
+        className={`${styles["menu-btn-container"]} ${
           isSidebarOpen && styles.translated
-        } ${isDisabled ? styles.disabled : ''}`}
+        } ${isDisabled ? styles.disabled : ""}`}
       >
         <div aria-labelledby="shopping-list-label">
           {!isIntroScreen && (
             <span
               id="your-selection-tooltip"
-              className={`${styles['tooltip-container']} ${styles['tooltip-text']}`}
+              className={`${styles["tooltip-container"]} ${styles["tooltip-text"]}`}
             >
               Your Selections
             </span>
@@ -53,22 +53,28 @@ const MenuButtons = ({
 
           <ToolTip tooltipText="View your shopping list." />
           <button
-            className={`${styles['your-selection-btn']} ${
-              sidebarComponent === 'ShoppingList' ? styles.selected : ''
+            className={`${styles["your-selection-btn"]} ${
+              sidebarComponent === "ShoppingList" ? styles.selected : ""
             }`}
             onClick={onShoppingListClick}
           >
-            <img alt="" src={`${config.s3BucketUrl}/utils/your-selections.svg`} />
+            <img
+              alt=""
+              src={`${config.s3BucketUrl}/utils/your-selections.svg`}
+            />
           </button>
           <span id="shopping-list-label" hidden>
             Open Your Selections
           </span>
         </div>
-        <div className={styles['btn-margin']} aria-labelledby="save-button-label">
+        <div
+          className={styles["btn-margin"]}
+          aria-labelledby="save-button-label"
+        >
           {!isIntroScreen && (
             <span
               id="save-share-tooltip"
-              className={`${styles['tooltip-container']} ${styles['tooltip-text']}`}
+              className={`${styles["tooltip-container"]} ${styles["tooltip-text"]}`}
             >
               Save/ Share
             </span>
@@ -77,8 +83,8 @@ const MenuButtons = ({
           <ToolTip tooltipText="Share & save your designs." />
           <button
             onClick={onSaveShareClick}
-            className={`${styles['save-share-btn']} ${
-              isSaveShareOpen ? styles.selected : ''
+            className={`${styles["save-share-btn"]} ${
+              isSaveShareOpen ? styles.selected : ""
             }`}
           >
             <img
@@ -91,22 +97,25 @@ const MenuButtons = ({
             Open Save/Share Popup
           </span>
         </div>
-        <div className={styles['btn-margin']} aria-labelledby="product-menu-label">
+        <div
+          className={styles["btn-margin"]}
+          aria-labelledby="product-menu-label"
+        >
           {!isIntroScreen && (
             <span
               id="product-menu-tooltip"
-              className={`${styles['tooltip-container']} ${styles['tooltip-text']}`}
+              className={`${styles["tooltip-container"]} ${styles["tooltip-text"]}`}
             >
-              Curated Rooms
+              Vibes
             </span>
           )}
 
-          <ToolTip tooltipText="View our curated rooms" />
+          <ToolTip tooltipText="View our vibes" />
           <button
             onClick={onCuratedRoomMenuClick}
-            className={`${styles['product-menu-btn']} ${
+            className={`${styles["product-menu-btn"]} ${
               isSidebarOpen === true &&
-              sidebarComponent === 'CuratedRoom' &&
+              sidebarComponent === "CuratedRoom" &&
               styles.selected
             }`}
           >
@@ -116,18 +125,55 @@ const MenuButtons = ({
             Open Products Menu
           </span>
         </div>
-        <div className={styles['btn-margin']} aria-labelledby="reset-label" id="reset">
+        <div
+          className={styles["btn-margin"]}
+          aria-labelledby="reset-label"
+          id="reset"
+        >
           {!isIntroScreen && (
-            <span className={`${styles['tooltip-container']} ${styles['tooltip-text']}`}>
+            <span
+              className={`${styles["tooltip-container"]} ${styles["tooltip-text"]}`}
+            >
               Reset Your Design.
             </span>
           )}
 
           <ToolTip tooltipText="Reset your design." />
           {isMobile ? !isSidebarOpen && <ResetButton /> : <ResetButton />}
-          <ToolTip tooltipText="Reset Your design." type="mbl-resets" enableDevice />
+          <ToolTip
+            tooltipText="Reset Your design."
+            type="mbl-resets"
+            enableDevice
+          />
           <span id="reset-label" hidden>
             Reset your design.
+          </span>
+        </div>
+
+        <div
+          aria-labelledby="full-screen-label"
+          className={styles["full-screen-div"]}
+        >
+          {!isIntroScreen && (
+            <span
+              id="full-screen-tooltip"
+              className={`${styles["tooltip-container"]} ${styles["tooltip-text"]}`}
+            >
+              Full Screen
+            </span>
+          )}
+
+          <ToolTip tooltipText="Full Screen" />
+          <button
+            className={`${styles["full-screen-btn"]} ${
+              sidebarComponent === "ShoppingList" ? styles.selected : ""
+            }`}
+            onClick={() => console.log("full screen clicked")}
+          >
+            <img alt="" src={`${config.s3BucketUrl}/utils/fullScreen.svg`} />
+          </button>
+          <span id="full-screen-label" hidden>
+            Full Screen
           </span>
         </div>
       </div>
@@ -148,13 +194,13 @@ MenuButtons.propTypes = {
 };
 
 MenuButtons.defaultProps = {
-  sidebarComponent: '',
+  sidebarComponent: "",
 };
 
-const mapStateToProps = state => ({
-  isSaveShareOpen: state.interaction.get('isSaveShareOpen'),
-  sidebarComponent: state.interaction.get('sidebarComponent'),
-  isIntroScreen: state.experience.get('isIntroScreen'),
+const mapStateToProps = (state) => ({
+  isSaveShareOpen: state.interaction.get("isSaveShareOpen"),
+  sidebarComponent: state.interaction.get("sidebarComponent"),
+  isIntroScreen: state.experience.get("isIntroScreen"),
 });
 
 export default connect(mapStateToProps)(MenuButtons);

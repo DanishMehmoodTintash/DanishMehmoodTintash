@@ -161,7 +161,7 @@
     font-size: 1.26em;
     line-height: 1.58em;
     text-align: center;
-    color: $med-gray;
+    color: $onyx;
     width: 100%;
     margin: 2.35% auto;
 
@@ -392,7 +392,7 @@ input[type="text"].your-name::-webkit-input-placeholder {
       font-weight: bold;
       margin-bottom: 3px;
       letter-spacing: 0.07em;
-
+      color: $onyx;
       span {
         color: $med-gray;
         text-transform: lowercase;
@@ -430,7 +430,7 @@ input[type="text"].your-name::-webkit-input-placeholder {
       font-weight: normal;
       font-size: 1em;
       line-height: 1.5em;
-      color: $dark-gray;
+      color: $onyx;
       padding: 2% 2% 5%;
       overflow-y: scroll;
       @include for-other-devices() {
@@ -448,7 +448,7 @@ input[type="text"].your-name::-webkit-input-placeholder {
 .send-btn-container {
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   overflow: hidden;
   height: auto;
   margin: 0 auto;
@@ -460,9 +460,10 @@ input[type="text"].your-name::-webkit-input-placeholder {
 
   @include devices() {
     position: absolute;
-    bottom: 2%;
+    bottom: 8%;
     padding-right: 5%;
     padding-left: 5%;
+    justify-content: center;
   }
 
   input {

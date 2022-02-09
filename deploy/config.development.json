@@ -3,7 +3,7 @@
     "accessKeyId": "AKIAI4QSUFO74BJYO3FA",
     "secretAccessKey": "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",
     "region": "us-east-1",
-    "bucket": "3d-shop-by-room-dev",
+    "bucket": "dorm-mvp-dev",
     "distributionId": "E2XN6MYD8RCY1O"
   }
 }

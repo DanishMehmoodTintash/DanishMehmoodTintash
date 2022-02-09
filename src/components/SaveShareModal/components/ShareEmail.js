@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Map } from 'immutable';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { Map } from "immutable";
 
-import { track, trackingProps } from 'helpers/analyticsService';
+import { track, trackingProps } from "helpers/analyticsService";
 
-import Actions from 'components/common/Actions';
+import Actions from "components/common/Actions";
 
 const ShareEmail = ({
   styles,
@@ -14,14 +14,14 @@ const ShareEmail = ({
   onCloseButtonClick,
   currentCollection,
 }) => {
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [text, setText] = useState(
-    `Check out this custom room design I created with the 3D room design tool on Bed Bath & Beyond! You can see what products I chose, and even create a design of your own.`
+    `Check out this custom dorm design I created! You can see what products I chose, and even create a design of your own.`
   );
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
-  const handleEmailChange = event => {
+  const handleEmailChange = (event) => {
     setEmail(event.target.value);
     const emailRegex = /\S+@\S+\.\S+/;
     if (event.target.validity.valid) {
@@ -35,27 +35,27 @@ const ShareEmail = ({
     }
   };
 
-  const handleNameChange = event => {
+  const handleNameChange = (event) => {
     setName(event.target.value);
   };
 
-  const handleTextChange = event => {
+  const handleTextChange = (event) => {
     setText(event.target.value);
   };
 
-  const handleSubmit = async event => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     await shareEmail(email, name, text);
 
     onCloseButtonClick();
-    track('Send Email', {
-      [trackingProps.ROOM_NAME]: currentCollection.get('type_name'),
+    track("Send Email", {
+      [trackingProps.ROOM_NAME]: currentCollection.get("type_name"),
     });
   };
 
   return (
     <>
-      <div className={styles['actions-container']}>
+      <div className={styles["actions-container"]}>
         <Actions
           styles={styles}
           onCloseButtonClick={onCloseButtonClick}
@@ -64,55 +64,55 @@ const ShareEmail = ({
         />
       </div>
       <form onSubmit={handleSubmit}>
-        <div className={styles['scroll-container']}>
+        <div className={styles["scroll-container"]}>
           <div
-            className={`${styles.header} brandon-medium ${styles['mobile-padding-top']}`}
+            className={`${styles.header} brandon-medium ${styles["mobile-padding-top"]}`}
           >
             Share With Email
           </div>
-          <div className={styles['input-container']}>
+          <div className={styles["input-container"]}>
             <label htmlFor="email" className={styles.text}>
               Send To:
               <input
                 value={email}
                 onChange={handleEmailChange}
-                className={styles['receipient-email']}
+                className={styles["receipient-email"]}
                 type="email"
                 placeholder="Recipient email"
                 required
               />
             </label>
           </div>
-          <div className={styles['input-container']}>
+          <div className={styles["input-container"]}>
             <label htmlFor="name" className={styles.text}>
               From: <span>(optional)</span>
               <input
                 value={name}
                 onChange={handleNameChange}
-                className={styles['your-name']}
+                className={styles["your-name"]}
                 type="text"
                 placeholder="Your name"
               />
             </label>
           </div>
-          <div className={styles['input-container']}>
-            <div className={styles['message-heading']}>
+          <div className={styles["input-container"]}>
+            <div className={styles["message-heading"]}>
               <label htmlFor="message" className={styles.text}>
-                Message:{' '}
+                Message:{" "}
               </label>
-              <div className={styles['msg-heading']}>
-                (image and link to your shop by room design will be included)
+              <div className={styles["msg-heading"]}>
+                (image and link to your dorm design will be included)
               </div>
             </div>
             <textarea
-              className={styles['text-area']}
+              className={styles["text-area"]}
               rows="2"
               value={text}
               onChange={handleTextChange}
             />
           </div>
         </div>
-        <div className={styles['send-btn-container']}>
+        <div className={styles["send-btn-container"]}>
           <input type="submit" value="Send" disabled={buttonDisabled} />
         </div>
       </form>
@@ -132,8 +132,8 @@ ShareEmail.defaultProps = {
   currentCollection: null,
 };
 
-const mapStateToProps = state => ({
-  currentCollection: state.collection.get('currentCollection'),
+const mapStateToProps = (state) => ({
+  currentCollection: state.collection.get("currentCollection"),
 });
 
 const mapDispatchToProps = {};
