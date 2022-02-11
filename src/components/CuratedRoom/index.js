@@ -106,7 +106,6 @@ const CuratedRoom = ({
                   <span
                     className={`${styles["brand-heading"]} ${styles["brand-name"]} proxima`}
                   >
-                    by&nbsp;
                     <span className="proxima-bold">{room.get("brand")}</span>
                   </span>
                 </button>

@@ -490,6 +490,12 @@ export const applyFilters = () => {
       const itemsList = itemsData.get(currentCategory).toJS();
       let list = applyPropertyFilters(itemsList, appliedFilters);
       list = applySortAndSearch(list, sortState, searchString);
+      // console.table(appliedFilters);
+      // console.log(`Search String ${searchString} , ${searchString.length} , ${typeof searchString}`);
+      // if(!list?.length && !searchString?.length && (Object.keys(appliedFilters).length === 1 && Object.values(appliedFilters['brand'])[0] === true) ){
+      //   list = itemsList;
+      //   dispatch(setFilterDisclaimer("disclaimer", currentCategory));
+      // }
       dispatch(setFilteredItems(list));
     }
   };

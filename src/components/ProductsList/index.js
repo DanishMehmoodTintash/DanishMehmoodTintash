@@ -12,7 +12,7 @@ import {
   setSearchString,
   setFilterDisclaimer,
 } from "actions/interaction";
-import { applyFilters, loadCategoryImagesInHashMap } from "actions/collection";
+import { applyFilters, setFilteredItems,  loadCategoryImagesInHashMap } from "actions/collection";
 
 import Actions from "components/common/Actions";
 
@@ -45,6 +45,7 @@ const ProductsList = ({
   currentBrand,
   setFilterDisclaimer,
   currentCollection,
+  itemsData
 }) => {
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [disclaimerVisible, setDisclaimerVisible] = useState(false);
@@ -72,10 +73,20 @@ const ProductsList = ({
         setTooltipVisible(false);
     }
   }, [filterDisclaimers, currentCategory]);
-
+  
   useLayoutEffect(() => {
-    applyFilters();
-  }, [sortState, searchString, currentCategory, appliedFilters]);
+    // setDisclaimerVisible(false);
+    const list = itemsData.get(currentCategory)?.toJS();
+    console.log('@@@@@@@@@@@@@@@@@@@@@@@@', tooltipVisible, disclaimerVisible, filteredItems, filteredItems.size, list, currentCategory);
+
+    if (filteredItems.size === 0 && tooltipVisible) {
+      setDisclaimerVisible(true);
+      setTooltipVisible(false);
+      setFilteredItems(list);
+    }
+
+    // It works fine , but after this applyFilters UseLayout effect runs and empties the filteredItems Data
+  }, [tooltipVisible]);
 
   useLayoutEffect(() => {
     if (filteredItems.size) {

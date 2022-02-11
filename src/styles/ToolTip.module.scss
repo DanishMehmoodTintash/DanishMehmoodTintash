@@ -21,7 +21,7 @@
   z-index: 1;
 
   @include for-large-screen() {
-    top: 18%;
+    top: 13%;
   }
   @include for-mobile-device() {
     top: 34%;
@@ -152,15 +152,22 @@
   bottom: 7%;
   left: 50%;
   right: 50%;
-  width: 73%;
+  width: 87%;
   transform: translate(-50%, -50%);
   z-index: 99;
 }
 
 .mbl-menu-tooltip-text {
-  top: 14% !important;
+  top: 18% !important;
   line-height: 18px;
   font-weight: 600 !important;
+
+  @include for-four-hundred-screen-width() {
+    top: 25% !important;
+  }
+  @include for-three-hundred-screen-width() {
+    top: 21% !important;
+  }
 }
 
 .mbl-reset-btn {

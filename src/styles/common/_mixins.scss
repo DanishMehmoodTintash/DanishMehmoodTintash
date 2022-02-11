@@ -129,3 +129,15 @@
     @content;
   }
 }
+
+@mixin for-three-hundred-screen-width() {
+  @media (max-width: 390px) {
+    @content;
+  }
+}
+
+@mixin for-four-hundred-screen-width() {
+  @media (min-width: 391px) {
+    @content;
+  }
+}

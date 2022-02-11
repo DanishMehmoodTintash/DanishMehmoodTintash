@@ -76,7 +76,7 @@ const MenuButtons = ({
               id="save-share-tooltip"
               className={`${styles["tooltip-container"]} ${styles["tooltip-text"]}`}
             >
-              Save/ Share
+              Save / Share
             </span>
           )}
 

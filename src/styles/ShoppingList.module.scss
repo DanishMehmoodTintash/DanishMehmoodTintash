@@ -1,5 +1,5 @@
-@import './common/mixins';
-@import './common/colors';
+@import "./common/mixins";
+@import "./common/colors";
 
 .shopping-list-container {
   display: flex;
@@ -25,7 +25,6 @@
     font-weight: bold;
 
     @include for-other-devices() {
-      margin-top: 0;
       line-height: unset;
     }
   }
@@ -178,7 +177,7 @@
       }
     }
 
-    .product-sku{
+    .product-sku {
       color: $promo-red;
       text-align: left;
       font-weight: bold;
