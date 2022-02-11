@@ -17,6 +17,7 @@ const ResetModal = ({
   setResetOpen,
   currentCollection,
 }) => {
+
   const onReset = () => {
     track("Yes Reset My Room", {
       [trackingProps.ROOM_NAME]: currentCollection?.get("type_name"),
@@ -25,7 +26,8 @@ const ResetModal = ({
     setResetOpen(false);
   };
 
-  const onClose = () => {
+  const onClose = (event) => {
+    event.preventDefault();
     track("No Keep My Choices", {
       [trackingProps.ROOM_NAME]: currentCollection?.get("type_name"),
     });

@@ -76,20 +76,12 @@ const ProductsList = ({
   }, [filterDisclaimers, currentCategory]);
   
   useLayoutEffect(() => {
-    // setDisclaimerVisible(false);
-    const list = itemsData.get(currentCategory)?.toJS();
-    console.log('@@@@@@@@@@@@@@@@@@@@@@@@', tooltipVisible, disclaimerVisible, filteredItems, filteredItems.size, list, currentCategory);
-
     if (filteredItems.size === 0 && tooltipVisible) {
       setDisclaimerVisible(true);
-      
       setTooltipVisible(false);
-      setFilteredItems(list);
     }
-
-    // It works fine , but after this applyFilters UseLayout effect runs and empties the filteredItems Data
   }, [tooltipVisible]);
-
+  
   useLayoutEffect(() => {
     if (filteredItems.size) {
       loadCategoryImagesInHashMap(filteredItems);
@@ -125,8 +117,17 @@ const ProductsList = ({
   };
 
   useLayoutEffect(() => {
+    console.log('I am Apply Filters');
     applyFilters();
   }, [sortState, searchString, currentCategory, appliedFilters]);
+
+  useLayoutEffect(() => {
+    if (filteredItems.size === 0 && searchString.length === 0 && disclaimerVisible) {
+      const list = itemsData.get(currentCategory)?.toJS();
+      setFilteredItems(list);
+    }
+  }, [searchString, disclaimerVisible, sortState, filteredItems]);
+
 
   return (
     <div className={styles["product-list"]} id="bottom_menu_details">

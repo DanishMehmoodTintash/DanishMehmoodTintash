@@ -17,7 +17,6 @@ import {
 import ToolTip from 'components/IntroScreen/components/Tooltip';
 
 import config from 'config';
-
 import styles from 'styles/RoomSettingsDropdown.module.scss';
 
 const RoomSettingsDropdown = ({
@@ -47,6 +46,7 @@ const RoomSettingsDropdown = ({
   };
 
   useEffect(() => {
+    console.log('IS OPEN', isOpen);
     if (isOpen) {
       track('Change Room Type', {
         [trackingProps.ROOM_NAME]: currentCollection.get('type_name'),
