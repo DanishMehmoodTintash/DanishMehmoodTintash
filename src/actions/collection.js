@@ -496,6 +496,11 @@ export const applyFilters = () => {
       //   list = itemsList;
       //   dispatch(setFilterDisclaimer("disclaimer", currentCategory));
       // }
+      // const filterMessageState = interaction.get('filterDisclaimers').get(currentCategory);
+      // console.log('This is the state', filterMessageState ,  filterMessageState === 'disclaimer');
+      // if(!list?.length && !searchString?.length && filterMessageState === 'disclaimer'){
+      //   list = itemsList;
+      // }
       dispatch(setFilteredItems(list));
     }
   };

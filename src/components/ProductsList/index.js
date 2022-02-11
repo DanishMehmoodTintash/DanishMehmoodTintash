@@ -45,7 +45,8 @@ const ProductsList = ({
   currentBrand,
   setFilterDisclaimer,
   currentCollection,
-  itemsData
+  itemsData,
+  setFilteredItems,
 }) => {
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [disclaimerVisible, setDisclaimerVisible] = useState(false);
@@ -81,6 +82,7 @@ const ProductsList = ({
 
     if (filteredItems.size === 0 && tooltipVisible) {
       setDisclaimerVisible(true);
+      
       setTooltipVisible(false);
       setFilteredItems(list);
     }
@@ -294,6 +296,7 @@ ProductsList.propTypes = {
   setSearchString: PropTypes.func.isRequired,
   searchString: PropTypes.string.isRequired,
   applyFilters: PropTypes.func.isRequired,
+  setFilteredItems: PropTypes.func.isRequired,
   filteredItems: PropTypes.instanceOf(List).isRequired,
   onFiltersClick: PropTypes.func.isRequired,
   appliedFilters: PropTypes.instanceOf(Map).isRequired,
@@ -333,6 +336,7 @@ const mapDispatchToProps = {
   setSortState,
   setSearchString,
   applyFilters,
+  setFilteredItems,
   loadCategoryImagesInHashMap,
   setFilterDisclaimer,
 };
