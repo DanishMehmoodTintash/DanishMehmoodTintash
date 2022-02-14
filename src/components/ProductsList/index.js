@@ -256,7 +256,7 @@ const ProductsList = ({
                     alt=""
                     src={`${config.s3BucketUrl}/utils/remove-item.svg`}
                   />
-                  <p>No {currentCategory}</p>
+                  <p>Hide {currentCategory}</p>
                 </button>
               </li>
             )}

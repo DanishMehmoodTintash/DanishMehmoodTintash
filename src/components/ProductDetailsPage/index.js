@@ -62,6 +62,12 @@ const ProductDetailsPage = ({
             <p className={styles["tag-price-varies"]}>*price varies by size</p>
           )}
         </span>
+        <div className={styles["details-container"]}>
+          <div>
+            <h2 className={styles.head}>Finish</h2>
+            <div className={styles.info}>{currentItem.get("color")}</div>
+          </div>
+        </div>
         <a
           href={currentItem.get("shop_it_url")}
           target="_blank"
@@ -89,10 +95,6 @@ const ProductDetailsPage = ({
                 more sizes avail.
               </p>
             )}
-          </div>
-          <div>
-            <h2 className={styles.head}>Finish</h2>
-            <div className={styles.info}>{currentItem.get("color")}</div>
           </div>
           <div>
             <h2 className={styles.head}>Description</h2>

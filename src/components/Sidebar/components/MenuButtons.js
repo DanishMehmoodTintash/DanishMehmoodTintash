@@ -110,7 +110,7 @@ const MenuButtons = ({
             </span>
           )}
 
-          <ToolTip tooltipText="View our vibes" />
+          <ToolTip tooltipText="View our vibes." />
           <button
             onClick={onCuratedRoomMenuClick}
             className={`${styles["product-menu-btn"]} ${
@@ -134,7 +134,7 @@ const MenuButtons = ({
             <span
               className={`${styles["tooltip-container"]} ${styles["tooltip-text"]}`}
             >
-              Reset Your Design.
+              Reset Your Design
             </span>
           )}
 
@@ -146,7 +146,7 @@ const MenuButtons = ({
             enableDevice
           />
           <span id="reset-label" hidden>
-            Reset your design.
+            Reset your design
           </span>
         </div>
 
