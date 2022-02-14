@@ -50,10 +50,9 @@ const ProductsList = ({
 }) => {
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [disclaimerVisible, setDisclaimerVisible] = useState(false);
-
   const listRef = useRef(null);
-
   const selectedItem = selectedItemsMap.get(currentCategory);
+  const isMobile = window.innerWidth <= 600;
 
   useLayoutEffect(() => {
     listRef.current.scrollTo(0, 0);
@@ -234,7 +233,7 @@ const ProductsList = ({
                   onClick={() => onItemDetailsClick(item)}
                   aria-label={`View details for ${item.get("name")}`}
                 >
-                  SEE DETAILS
+                  { isMobile ? 'VIEW DETAILS'  : 'SEE DETAILS'} 
                   <img
                     src={`${config.s3BucketUrl}/utils/arrow-right.svg`}
                     alt=""
